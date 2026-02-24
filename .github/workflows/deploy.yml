@@ -10,6 +10,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        
+      - name: Generate API secret file
+        run: |
+            mkdir -p api
+            cat > api/github-token.php <<'PHP'
+            <?php
+            return '${{ secrets.GITHUBTOKEN }}';
+            PHP
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

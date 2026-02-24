@@ -2,7 +2,16 @@
 
 header('Content-Type: application/json');
 
-$githubToken = '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';
+$githubToken = '';
+$tokenFile = __DIR__ . '/github-token.php';
+
+if (is_file($tokenFile)) {
+    $githubToken = require $tokenFile;
+}
+
+if ($githubToken === '') {
+    $githubToken = getenv('GITHUB_TOKEN') ?: '';
+}
 $user = $_GET['user'] ?? 'AaronCreor';
 $user = trim($user) !== '' ? trim($user) : 'AaronCreor';
 
