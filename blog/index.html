@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | Aaron Creor</title>
+  <meta name="description" content="Blog posts by Aaron Creor.">
+  <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+  <canvas id="bg" aria-hidden="true"></canvas>
+
+  <main class="wrap">
+    <div class="container">
+      <header>
+        <h1 class="name">Blog</h1>
+        <p class="tagline">
+          Notes, experiments, and project writeups.
+        </p>
+        <nav class="links" aria-label="Blog navigation">
+          <a href="../index.html">Back to Home</a>
+        </nav>
+      </header>
+
+      <section class="section">
+        <div class="sectionHeaderRow">
+          <h2>All Posts</h2>
+        </div>
+        <div class="blogList" id="allBlogPosts"></div>
+        <div class="smallNote" id="allBlogPostsNote">Loading posts...</div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    function formatBlogDate(dateString) {
+      const date = new Date(dateString);
+      if (Number.isNaN(date.getTime())) return dateString;
+      return new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      }).format(date);
+    }
+
+    function createBlogCard(post) {
+      const link = document.createElement("a");
+      link.className = "blogCard";
+      link.href = post.path.replace(/^blog\//, "");
+
+      const title = document.createElement("h3");
+      title.className = "blogCardTitle";
+      title.textContent = post.title;
+
+      const meta = document.createElement("div");
+      meta.className = "blogCardMeta";
+      meta.textContent = formatBlogDate(post.published);
+
+      const excerpt = document.createElement("div");
+      excerpt.className = "blogCardExcerpt";
+      excerpt.textContent = post.excerpt || "";
+
+      link.append(title, meta, excerpt);
+      return link;
+    }
+
+    async function loadBlogIndex() {
+      const list = document.getElementById("allBlogPosts");
+      const note = document.getElementById("allBlogPostsNote");
+      try {
+        const response = await fetch("posts.json");
+        if (!response.ok) throw new Error("Failed to load posts");
+        const data = await response.json();
+        const posts = Array.isArray(data.posts) ? data.posts : [];
+
+        const sorted = posts
+          .filter((post) => post && post.title && post.path && post.published)
+          .sort((a, b) => new Date(b.published) - new Date(a.published));
+
+        list.innerHTML = "";
+        if (sorted.length === 0) {
+          note.textContent = "No blog posts yet.";
+          return;
+        }
+
+        for (const post of sorted) {
+          list.appendChild(createBlogCard(post));
+        }
+        note.textContent = `${sorted.length} post${sorted.length === 1 ? "" : "s"}.`;
+      } catch (error) {
+        console.warn(error);
+        note.textContent = "Couldn't load blog posts.";
+      }
+    }
+
+    loadBlogIndex();
+  </script>
+</body>
+</html>

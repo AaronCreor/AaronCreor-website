@@ -1,0 +1,11 @@
+{
+  "posts": [
+    {
+      "slug": "hello-world",
+      "title": "Hello World",
+      "published": "2026-02-24",
+      "excerpt": "My first of hopefully many blog posts.",
+      "path": "blog/posts/hello-world.html"
+    }
+  ]
+}

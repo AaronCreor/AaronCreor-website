@@ -205,11 +205,43 @@ html[data-color-mode="light"] .themeToggle:hover {
   text-transform: uppercase;
 }
 
+.sectionHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sectionHeaderRow h2 {
+  margin-bottom: 0;
+}
+
+.sectionLink {
+  color: var(--link);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.sectionLink:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
 .section p {
   margin: 8px 0 0;
   color: var(--muted);
   font-size: 14.75px;
   line-height: 1.6;
+}
+
+code {
+  padding: 1px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.92);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.92em;
 }
 
 .grid {
@@ -296,6 +328,50 @@ html[data-color-mode="light"] .themeToggle:hover {
   grid-template-columns: 1fr;
   gap: 12px;
   margin-top: 12px;
+}
+
+.blogList {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.blogCard {
+  display: block;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.blogCard:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.blogCardTitle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.blogCardMeta {
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12.5px;
+}
+
+.blogCardExcerpt {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.5;
 }
 
 details {
@@ -443,6 +519,7 @@ details a:hover {
 html[data-color-mode="light"] .links a,
 html[data-color-mode="light"] .card,
 html[data-color-mode="light"] .list a,
+html[data-color-mode="light"] .blogCard,
 html[data-color-mode="light"] details,
 html[data-color-mode="light"] .badgeCard,
 html[data-color-mode="light"] .tracker img,
@@ -454,6 +531,7 @@ html[data-color-mode="light"] .langBar {
 
 html[data-color-mode="light"] .links a:hover,
 html[data-color-mode="light"] .list a:hover,
+html[data-color-mode="light"] .blogCard:hover,
 html[data-color-mode="light"] .badgeCard:hover {
   border-color: rgba(15, 23, 42, 0.2);
   background: rgba(15, 23, 42, 0.05);
@@ -464,6 +542,7 @@ html[data-color-mode="light"] .section {
 }
 
 html[data-color-mode="light"] .section h2,
+html[data-color-mode="light"] .blogCardMeta,
 html[data-color-mode="light"] .langTop,
 html[data-color-mode="light"] .badgeIssuer,
 html[data-color-mode="light"] .smallNote,
@@ -472,11 +551,22 @@ html[data-color-mode="light"] .stat .label {
 }
 
 html[data-color-mode="light"] .card h3,
+html[data-color-mode="light"] .blogCardTitle,
 html[data-color-mode="light"] .list a,
 html[data-color-mode="light"] details a,
 html[data-color-mode="light"] summary,
 html[data-color-mode="light"] .badgeCard {
   color: rgba(15, 23, 42, 0.9);
+}
+
+html[data-color-mode="light"] code {
+  border-color: rgba(15, 23, 42, 0.14);
+  background: rgba(15, 23, 42, 0.04);
+  color: rgba(15, 23, 42, 0.92);
+}
+
+html[data-color-mode="light"] .blogCardExcerpt {
+  color: rgba(15, 23, 42, 0.74);
 }
 
 html[data-color-mode="light"] .chip {

@@ -269,6 +269,82 @@ async function loadLanguageFrequency() {
   }
 }
 
+function formatBlogDate(dateString) {
+  const date = new Date(dateString);
+  if (Number.isNaN(date.getTime())) {
+    return dateString;
+  }
+
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(date);
+}
+
+function createBlogCard(post) {
+  const link = document.createElement("a");
+  link.className = "blogCard";
+  link.href = post.path;
+  link.textContent = "";
+
+  const title = document.createElement("h3");
+  title.className = "blogCardTitle";
+  title.textContent = post.title;
+
+  const meta = document.createElement("div");
+  meta.className = "blogCardMeta";
+  meta.textContent = formatBlogDate(post.published);
+
+  const excerpt = document.createElement("div");
+  excerpt.className = "blogCardExcerpt";
+  excerpt.textContent = post.excerpt || "";
+
+  link.append(title, meta, excerpt);
+  return link;
+}
+
+async function loadRecentBlogPosts() {
+  const list = document.getElementById("recentBlogPosts");
+  const note = document.getElementById("blogPostsNote");
+  if (!list || !note) return;
+
+  try {
+    const response = await fetch("blog/posts.json");
+    if (!response.ok) throw new Error(`Blog manifest failed: ${response.status}`);
+
+    const data = await response.json();
+    const posts = Array.isArray(data.posts) ? data.posts : [];
+
+    const recent = posts
+      .filter(
+        (post) =>
+          post &&
+          typeof post.title === "string" &&
+          typeof post.path === "string" &&
+          typeof post.published === "string"
+      )
+      .sort((a, b) => new Date(b.published) - new Date(a.published))
+      .slice(0, 3);
+
+    list.innerHTML = "";
+
+    if (recent.length === 0) {
+      note.textContent = "No blog posts yet.";
+      return;
+    }
+
+    for (const post of recent) {
+      list.appendChild(createBlogCard(post));
+    }
+
+    note.textContent = `Showing ${recent.length} most recent post${recent.length === 1 ? "" : "s"}.`;
+  } catch (error) {
+    console.warn(error);
+    note.textContent = "Couldn't load blog posts.";
+  }
+}
+
 function updateThemeToggleLockState() {
   if (!themeToggleButton) return;
 
@@ -413,3 +489,4 @@ function initBackground() {
 
 initBackground();
 loadLanguageFrequency();
+loadRecentBlogPosts();
