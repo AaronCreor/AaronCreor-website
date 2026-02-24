@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aaron Creor</title>
+    <meta name="description" content="Aaron Creor — Software Developer. Projects, links, and coding trackers." />
+
+    <style>
+        :root {
+            --bg: #0b0d12;
+            --card: rgba(18, 20, 28, 0.72);
+            --cardBorder: rgba(255, 255, 255, 0.10);
+            --text: rgba(255, 255, 255, 0.92);
+            --muted: rgba(255, 255, 255, 0.72);
+            --faint: rgba(255, 255, 255, 0.55);
+            --link: rgba(145, 190, 255, 0.95);
+            --linkHover: rgba(196, 225, 255, 1);
+            --chip: rgba(255, 255, 255, 0.08);
+            --chipBorder: rgba(255, 255, 255, 0.12);
+            --shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        canvas#bg {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            display: block;
+            background:
+                radial-gradient(1200px 700px at 20% 15%, rgba(60, 110, 255, 0.14), transparent 55%),
+                radial-gradient(900px 600px at 85% 70%, rgba(0, 255, 200, 0.08), transparent 55%),
+                radial-gradient(800px 550px at 50% 95%, rgba(255, 255, 255, 0.05), transparent 55%),
+                linear-gradient(180deg, #06070b 0%, #0b0d12 55%, #07080c 100%);
+        }
+
+        /* Centered container */
+        .wrap {
+            position: relative;
+            z-index: 1;
+            min-height: 100%;
+            display: grid;
+            place-items: center;
+            padding: 56px 18px;
+        }
+
+        .container {
+            width: min(820px, 100%);
+            background: var(--card);
+            border: 1px solid var(--cardBorder);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 28px 24px;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .name {
+            font-size: 30px;
+            font-weight: 750;
+            letter-spacing: 0.2px;
+            line-height: 1.12;
+            margin: 0;
+        }
+
+        .tagline {
+            color: var(--muted);
+            font-size: 14.75px;
+            line-height: 1.55;
+            max-width: 70ch;
+            margin: 0;
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            margin: 14px 0 2px;
+            padding: 0;
+        }
+
+        .links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 999px;
+            text-decoration: none;
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+            transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+            font-size: 13.5px;
+            white-space: nowrap;
+        }
+
+        .links a:hover {
+            transform: translateY(-1px);
+            border-color: rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .section {
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.09);
+        }
+
+        .section h2 {
+            margin: 0 0 10px;
+            font-size: 13px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        .section p {
+            margin: 8px 0 0;
+            color: var(--muted);
+            line-height: 1.6;
+            font-size: 14.75px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        @media (min-width: 820px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .card h3 {
+            margin: 0 0 10px;
+            font-size: 14.5px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .list {
+            display: grid;
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .list a {
+            display: inline-block;
+            padding: 9px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.03);
+            transition: border-color 120ms ease, transform 120ms ease, background 120ms ease;
+            color: rgba(255, 255, 255, 0.88);
+            text-decoration: none;
+        }
+
+        .list a:hover {
+            border-color: rgba(255, 255, 255, 0.20);
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .chip {
+            font-size: 12.5px;
+            color: rgba(255, 255, 255, 0.85);
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: var(--chip);
+            border: 1px solid var(--chipBorder);
+            user-select: none;
+        }
+
+        .tracker img {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.03);
+            display: block;
+        }
+
+        .trackerGrid {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: 1fr;
+            margin-top: 12px;
+        }
+
+        @media (min-width: 820px) {
+            .trackerGrid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .trackerGrid .full {
+                grid-column: 1 / -1;
+            }
+        }
+
+        details {
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            padding: 10px 12px;
+        }
+
+        summary {
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.90);
+            font-weight: 650;
+            outline: none;
+            list-style: none;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details p {
+            margin: 10px 0 0;
+            color: var(--muted);
+            font-size: 14.5px;
+            line-height: 1.55;
+        }
+
+        details a {
+            color: var(--link);
+            text-decoration: none;
+        }
+
+        details a:hover {
+            color: var(--linkHover);
+            text-decoration: underline;
+        }
+
+        .hintRow {
+            margin-top: 16px;
+            color: rgba(255, 255, 255, 0.50);
+            font-size: 12.5px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .kbd {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            padding: 3px 7px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        /* Badge grid */
+        .badgeGrid{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 12px;
+        }
+        @media (min-width: 820px){
+        .badgeGrid{ grid-template-columns: 1fr 1fr; }
+        }
+        
+        .badgeCard{
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.10);
+        background: rgba(255,255,255,0.03);
+        text-decoration: none;
+        color: rgba(255,255,255,0.88);
+        transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+        }
+        .badgeCard:hover{
+        transform: translateY(-1px);
+        border-color: rgba(255,255,255,0.20);
+        background: rgba(255,255,255,0.05);
+        }
+        
+        .badgeIcon{
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255,255,255,0.06);
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        font-size: 16px;
+        }
+        
+        .badgeMeta{
+        display: grid;
+        gap: 4px;
+        }
+        .badgeTitle{
+        font-weight: 650;
+        line-height: 1.2;
+        }
+        .badgeIssuer{
+        color: rgba(255,255,255,0.65);
+        font-size: 13px;
+        line-height: 1.35;
+        }
+
+        /* GitHub activity grid */
+        .statsGrid{
+        display:grid;
+        gap:12px;
+        grid-template-columns: 1fr;
+        margin-top: 12px;
+        }
+        @media (min-width: 820px){
+        .statsGrid{ grid-template-columns: 1fr 1fr 1fr 1fr; }
+        }
+        .stat{
+        border: 1px solid rgba(255,255,255,0.10);
+        background: rgba(255,255,255,0.03);
+        border-radius: 14px;
+        padding: 14px;
+        }
+        .stat .num{
+        font-size: 22px;
+        font-weight: 750;
+        letter-spacing: 0.2px;
+        line-height: 1.1;
+        }
+        .stat .label{
+        margin-top: 6px;
+        color: rgba(255,255,255,0.65);
+        font-size: 13px;
+        }
+        .smallNote{
+        margin-top: 10px;
+        color: rgba(255,255,255,0.55);
+        font-size: 13px;
+        }
+        
+        /* Optional languages list */
+        .langList{
+        display:grid;
+        gap:10px;
+        }
+        .langRow{
+        display:grid;
+        gap:6px;
+        }
+        .langTop{
+        display:flex;
+        justify-content:space-between;
+        gap:10px;
+        color: rgba(255,255,255,0.78);
+        font-size: 13px;
+        }
+        .langBar{
+        height: 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.10);
+        background: rgba(255,255,255,0.04);
+        overflow:hidden;
+        }
+        .langFill{
+        height: 100%;
+        width: 0%;
+        background: rgba(145,190,255,0.60); /* subtle, matches theme */
+        border-radius: 999px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="bg" aria-hidden="true"></canvas>
+
+    <main class="wrap">
+        <div class="container">
+            <header>
+                <h1 class="name">Aaron Creor</h1>
+                <p class="tagline">
+                  🎓 M.S. in Computer Science (in progress) — University of Texas at Austin<br/>
+                  🎓 B.S. in Computer Information Systems — University of the Fraser Valley<br/>
+                  💼 Currently working as Software Developer 2 at Jim Pattison Food Group<br/>
+                </p>
+
+                <nav class="links" aria-label="Primary links">
+                    <a href="https://github.com/AaronCreor" target="_blank" rel="noreferrer">GitHub</a>
+                    <a href="https://www.linkedin.com/in/aaroncreor/" target="_blank" rel="noreferrer">LinkedIn</a>
+                    <a href="https://leetcode.com/u/AaronCreor/" target="_blank" rel="noreferrer">LeetCode</a>
+                    <a href="https://stackoverflow.com/users/8954948/aaroncreor" target="_blank" rel="noreferrer">Stack Overflow</a>
+                    <a href="mailto:aaroncreor@gmail.com" target="_blank" rel="noreferrer">Email</a>
+                    <a href="https://www.chess.com/member/aaroncreor" target="_blank" rel="noreferrer">Chess</a>
+                </nav>
+            </header>
+
+            <section class="section">
+                <h2>About</h2>
+                <p>
+                    I’m a Software Developer 2 with a background in enterprise application development and systems integration,
+                    specializing in Java and C#. My work focuses on building and maintaining large-scale systems, particularly Java EE
+                    applications and complex infrastructure.
+                    <br><br>
+                    In my current role, I’ve contributed to modernizing internal platforms, ranging from updating production systems to meet
+                    evolving CFIA nutrition labeling requirements, to implementing CI/CD pipelines with GitHub Actions, and developing and
+                    maintaining complex Oracle database packages that support critical business workflows.
+                    <br><br>
+                    Outside of work, I enjoy building small game projects, tackling coding challenges on LeetCode, and playing
+                    chess. 
+                </p>
+
+                <div class="grid">
+                    <div class="card">
+                        <h3>Projects</h3>
+                        <ul class="list">
+                            <li><a href="https://github.com/AaronCreor/StockMarketShowdown" target="_blank"
+                                    rel="noreferrer">StockMarketShowdown</a></li>
+                            <li><a href="https://github.com/AaronCreor/FriendFlicks" target="_blank"
+                                    rel="noreferrer">FriendFlicks</a></li>
+                            <li><a href="https://github.com/AaronCreor/LeetCodeSolutions" target="_blank" rel="noreferrer">LeetCodeSolutions</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>Interests</h3>
+                        <div class="chips" aria-label="Competencies">
+                            <span class="chip">Backend Systems</span>
+                            <span class="chip">Systems Design</span>
+                            <span class="chip">Data Structures & Algorithms</span>
+                            <span class="chip">Machine Learning</span>
+                            <span class="chip">Operating Systems</span>
+                            <span class="chip">Applied Artificial Intelligence</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section tracker">
+                <h2>Trackers</h2>
+
+                <div class="trackerGrid">
+                    <div class="full">
+                    <a href="https://leetcode.com/u/AaronCreor/" target="_blank" rel="noreferrer">
+                        <img
+              src="https://leetcard.jacoblin.cool/AaronCreor?theme=dark&font=Red%20Hat%20Display&ext=heatmap"
+              alt="LeetCode stats card for AaronCreor"
+              loading="lazy"
+            />
+            </a>
+                </div>
+                    <div class="full">
+                <a href="https://github.com/AaronCreor" target="_blank" rel="noreferrer">
+                    <img
+                    src="https://streak-stats.demolab.com/?user=AaronCreor&theme=dark&hide_border=true&background=0b0d12"
+                    alt="GitHub Streak for AaronCreor"
+                    loading="lazy"
+                    style="width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.03); display:block;"
+                  />
+                </a>
+                </div>
+                <div class="full">
+                    <div class="card">
+                        <h3 style="margin:0 0 10px;">Language Frequency</h3>
+                        <div class="langList" id="ghLangList"></div>
+                        <div class="smallNote" id="ghLangNote">Loading…</div>
+                    </div>
+                </div>
+            </div>
+            </section>
+
+            <section class="section">
+                <h2>Languages & Tools</h2>
+
+                <div class="chips" aria-label="Languages">
+                    <span class="chip">Java</span>
+                    <span class="chip">C#</span>
+                    <span class="chip">.NET</span>
+                    <span class="chip">Python</span>
+                    <span class="chip">Kotlin</span>
+                    <span class="chip">Bash</span>
+                    <span class="chip">PowerShell</span>
+                    <span class="chip">SQL</span>
+                    <span class="chip">MySQL</span>
+                    <span class="chip">Oracle</span>
+                    <span class="chip">PostgreSQL</span>
+                </div>
+
+                <div class="chips" aria-label="Tools" style="margin-top:10px;">
+                    <span class="chip">Jira</span>
+                    <span class="chip">Confluence</span>
+                    <span class="chip">GitHub Actions</span>
+                    <span class="chip">Unix/Linux</span>
+                    <span class="chip">J2EE (JBoss EAP)</span>
+                </div>
+            </section>
+
+            <!-- Resume dropdown (kept), Extras removed -->
+            <section class="section">
+                <h2>Extras</h2>
+            
+                <!-- Keeping your existing content ideas, but minimalist + collapsible -->
+
+                <details>
+                    <summary>Resume</summary>
+                    <p>
+                        <a href="Aaron_Resume.pdf" target="_blank" rel="noreferrer">Open / download resume (PDF)</a>
+                        <br/>
+                    </p>
+                </details>
+                
+                <details style="margin-top:10px;">
+                    <summary>Research</summary>
+                    <p>
+                        <strong>Predicting Canadian Population Growth Through Machine Learning</strong><br/>
+                        <a href="Predicting Canadian Population Growth Through Machine Learning.pdf" target="_blank"
+                            rel="noreferrer">View PDF</a>
+                    </p>
+                </details>
+            
+                <details style="margin-top:10px;">
+                    <summary>SuperTuxKart AI</summary>
+                    <p style="margin-top:10px;">
+                        <video controls preload="metadata"
+                            style="width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.03);">
+                            <source src="MicrosoftTeams-video.webm" type="video/webm" />
+                            Your browser doesn’t support HTML5 video.
+                        </video>
+                    </p>
+                </details>
+
+                <details style="margin-top:10px;">
+                    <summary>Badges & Certifications</summary>
+                    <p style="margin-top:10px;">
+                    </p>
+                
+                    <div class="badgeGrid">
+                        <a class="badgeCard" href="https://cns.badges.utexas.edu/d0c8f2d1-d09c-4305-89a2-3057356440a3#acc.Bipou2rD"
+                            target="_blank" rel="noreferrer">
+                            <div class="badgeIcon">🏅</div>
+                            <div class="badgeMeta">
+                                <div class="badgeTitle">Planning, Search, and Reasoning Under Uncertainty</div>
+                                <div class="badgeIssuer">University of Texas at Austin</div>
+                            </div>
+                        </a>
+                
+                        <a class="badgeCard" href="https://cns.badges.utexas.edu/4b940814-dc18-4f03-8389-31276d8d8d57#acc.eKMy4nWl"
+                            target="_blank" rel="noreferrer">
+                            <div class="badgeIcon">🏅</div>
+                            <div class="badgeMeta">
+                                <div class="badgeTitle">Advances in Deep Learning</div>
+                                <div class="badgeIssuer">University of Texas at Austin</div>
+                            </div>
+                        </a>
+                
+                        <a class="badgeCard" href="https://www.credential.net/b38694bb-87b1-49be-a6e6-803e81db1cc8#acc.PRzanSO4"
+                            target="_blank" rel="noreferrer">
+                            <div class="badgeIcon">🏅</div>
+                            <div class="badgeMeta">
+                                <div class="badgeTitle">Reinforcement Learning</div>
+                                <div class="badgeIssuer">University of Texas at Austin</div>
+                            </div>
+                        </a>
+                
+                        <a class="badgeCard" href="https://badges.parchment.com/public/assertions/HCPWUts5TjuVZpqz9exq-A"
+                            target="_blank" rel="noreferrer">
+                            <div class="badgeIcon">🏅</div>
+                            <div class="badgeMeta">
+                                <div class="badgeTitle">Deep Learning</div>
+                                <div class="badgeIssuer">University of Texas at Austin</div>
+                            </div>
+                        </a>
+                
+                        <a class="badgeCard" href="https://badges.parchment.com/public/assertions/lktZ4gOxTg-RYlUqe2Di-w"
+                            target="_blank" rel="noreferrer">
+                            <div class="badgeIcon">🏅</div>
+                            <div class="badgeMeta">
+                                <div class="badgeTitle">Android Programming</div>
+                                <div class="badgeIssuer">University of Texas at Austin</div>
+                            </div>
+                        </a>
+                
+                        <a class="badgeCard" href="https://badges.parchment.com/public/assertions/TAV_9qyUTIGCQJ_lx-zVnA"
+                            target="_blank" rel="noreferrer">
+                            <div class="badgeIcon">🏅</div>
+                            <div class="badgeMeta">
+                                <div class="badgeTitle">Case Studies in Machine Learning</div>
+                                <div class="badgeIssuer">University of Texas at Austin</div>
+                            </div>
+                        </a>
+                    </div>
+                </details>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // ===== Subtle animated background =====
+    const canvas = document.getElementById('bg');
+    const ctx = canvas.getContext('2d', { alpha: true });
+
+    const state = {
+      w: 0, h: 0, dpr: 1,
+      particles: [],
+      running: true,
+      reduced: window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    };
+
+    function resize(){
+      state.dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      state.w = Math.floor(window.innerWidth);
+      state.h = Math.floor(window.innerHeight);
+
+      canvas.width = Math.floor(state.w * state.dpr);
+      canvas.height = Math.floor(state.h * state.dpr);
+      canvas.style.width = state.w + 'px';
+      canvas.style.height = state.h + 'px';
+      ctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
+
+      const base = Math.floor((state.w * state.h) / 22000);
+      const target = state.reduced ? Math.max(12, Math.floor(base * 0.35)) : Math.max(24, Math.min(90, base));
+      while (state.particles.length < target) state.particles.push(makeParticle());
+      while (state.particles.length > target) state.particles.pop();
+    }
+
+    function rand(min, max){ return min + Math.random() * (max - min); }
+
+    function makeParticle(){
+      return {
+        x: rand(0, state.w),
+        y: rand(0, state.h),
+        r: rand(0.8, 2.2),
+        vx: rand(-0.18, 0.18),
+        vy: rand(-0.12, 0.12),
+        a: rand(0.10, 0.30),
+      };
+    }
+
+    function step(){
+      if (!state.running) return;
+
+      ctx.clearRect(0, 0, state.w, state.h);
+
+      // Subtle vignette to keep the card readable
+      ctx.save();
+      ctx.globalAlpha = 0.20;
+      const g = ctx.createRadialGradient(state.w/2, state.h/2, 50, state.w/2, state.h/2, Math.max(state.w, state.h)*0.65);
+      g.addColorStop(0, 'rgba(0,0,0,0)');
+      g.addColorStop(1, 'rgba(0,0,0,0.55)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, state.w, state.h);
+      ctx.restore();
+
+      // Particles
+      for (const p of state.particles){
+        p.x += p.vx * (state.reduced ? 0.35 : 1);
+        p.y += p.vy * (state.reduced ? 0.35 : 1);
+
+        if (p.x < -10) p.x = state.w + 10;
+        if (p.x > state.w + 10) p.x = -10;
+        if (p.y < -10) p.y = state.h + 10;
+        if (p.y > state.h + 10) p.y = -10;
+
+        ctx.beginPath();
+        ctx.globalAlpha = p.a;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,1)';
+        ctx.fill();
+      }
+
+      // Connections (skip on reduced motion)
+      if (!state.reduced){
+        ctx.save();
+        ctx.globalAlpha = 0.07;
+        ctx.strokeStyle = 'rgba(145,190,255,1)';
+        for (let i = 0; i < state.particles.length; i++){
+          for (let j = i + 1; j < state.particles.length; j++){
+            const a = state.particles[i], b = state.particles[j];
+            const dx = a.x - b.x, dy = a.y - b.y;
+            const d2 = dx*dx + dy*dy;
+            if (d2 < 140*140){
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.stroke();
+            }
+          }
+        }
+        ctx.restore();
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    // Keyboard:
+    // P = pause animation
+    // R = toggle reduced motion
+    window.addEventListener('keydown', (e) => {
+      const k = (e.key || '').toLowerCase();
+      if (k === 'p'){
+        state.running = !state.running;
+        if (state.running) requestAnimationFrame(step);
+      }
+      if (k === 'r'){
+        state.reduced = !state.reduced;
+        resize();
+      }
+    });
+
+    window.addEventListener('resize', resize, { passive: true });
+    resize();
+    requestAnimationFrame(step);
+
+
+    async function loadLanguageFrequency(){
+    const list = document.getElementById('ghLangList');
+    const note = document.getElementById('ghLangNote');
+    
+    try{
+    const res = await fetch('/api/github-langs.php?user=AaronCreor');
+    if(!res.ok) throw new Error('API failed');
+    const data = await res.json();
+    
+    const entries = (data.languages || []).filter(x => (x.pct ?? 0) > 0);
+    if(entries.length === 0){
+    note.textContent = "No language data available.";
+    return;
+    }
+    
+    list.innerHTML = entries.map(({ lang, pct }) => `
+    <div class="langRow">
+        <div class="langTop">
+            <span>${lang}</span>
+            <span>${pct}%</span>
+        </div>
+        <div class="langBar">
+            <div class="langFill" style="width:${pct}%"></div>
+        </div>
+    </div>
+    `).join("");
+    
+    note.innerHTML = `Based on ${data.sampled_repos} recent repos · <a href="https://github.com/AaronCreor" target="_blank"
+        rel="noreferrer">GitHub</a>`;
+    }catch(e){
+    console.warn(e);
+    note.textContent = "Couldn’t load language stats.";
+    }
+    }
+    
+    loadLanguageFrequency();
+
+    </script>
+</body>
+</html>
