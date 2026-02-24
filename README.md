@@ -13,7 +13,7 @@ Personal portfolio website with a lightweight PHP API endpoint for GitHub langua
 
 - `HTML5` (`index.html`)
 - `CSS` (`css/index.css`)
-- `Vanilla JavaScript` (`js/index.js`)
+- `JavaScript` (`js/index.js`)
 - `PHP` (`api/github-langs.php`) for GitHub API requests and aggregation
 - `GitHub Actions` for CI/CD
 - `FTP` deployment using `SamKirkland/FTP-Deploy-Action`
@@ -31,7 +31,7 @@ Personal portfolio website with a lightweight PHP API endpoint for GitHub langua
 │   └── github-langs.php
 ├── media/
 │   ├── Aaron_Resume.pdf
-│   ├── MicrosoftTeams-video.webm
+│   ├── SuperTuxKart.webm
 │   ├── Predicting Canadian Population Growth Through Machine Learning.pdf
 │   └── SDN.pdf
 └── .github/
@@ -100,15 +100,3 @@ Deployment is configured in `.github/workflows/deploy.yml`.
 - `FTP_PORT`
 - `REMOTE_PATH` (must end with `/`, e.g. `/public_html/`)
 - `GITHUBTOKEN` (used to generate `api/github-token.php` during deploy)
-
-## Notes
-
-- `phpMyAdmin` variables do not configure PHP environment variables for the website
-- If using server environment variables instead of a generated token file, keep `api/github-langs.php` unchanged and configure `GITHUB_TOKEN` on the host
-- If a token is ever exposed, revoke it and create a new one immediately
-
-## Future Cleanup Ideas
-
-- Add a `.gitignore` entry for `api/github-token.php`
-- Add a small `api/health.php` endpoint for deployment/runtime checks
-- Add basic linting/format checks for HTML/CSS/JS/PHP
