@@ -227,6 +227,26 @@ html[data-color-mode="light"] .themeToggle:hover {
   text-decoration: underline;
 }
 
+.sectionLinkButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 12.75px;
+  text-decoration: none;
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.sectionLinkButton:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.06);
+  text-decoration: none;
+}
+
 .section p {
   margin: 8px 0 0;
   color: var(--muted);
@@ -553,6 +573,7 @@ html[data-color-mode="light"] .stat .label {
 html[data-color-mode="light"] .card h3,
 html[data-color-mode="light"] .blogCardTitle,
 html[data-color-mode="light"] .list a,
+html[data-color-mode="light"] .sectionLinkButton,
 html[data-color-mode="light"] details a,
 html[data-color-mode="light"] summary,
 html[data-color-mode="light"] .badgeCard {
@@ -571,6 +592,16 @@ html[data-color-mode="light"] .blogCardExcerpt {
 
 html[data-color-mode="light"] .chip {
   color: rgba(15, 23, 42, 0.82);
+}
+
+html[data-color-mode="light"] .sectionLinkButton {
+  border-color: rgba(15, 23, 42, 0.12);
+  background: rgba(15, 23, 42, 0.03);
+}
+
+html[data-color-mode="light"] .sectionLinkButton:hover {
+  border-color: rgba(15, 23, 42, 0.2);
+  background: rgba(15, 23, 42, 0.05);
 }
 
 html[data-color-mode="light"] .langFill {
