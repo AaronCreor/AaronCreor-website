@@ -60,37 +60,129 @@
           Outside of work, I enjoy building small game projects, tackling coding challenges on LeetCode, and playing chess.
         </p>
 
-        <div class="grid">
-          <div class="card">
-            <h3>Projects</h3>
-            <ul class="list">
-              <li>
-                <a href="https://github.com/AaronCreor/StockMarketShowdown" target="_blank" rel="noreferrer">
-                  StockMarketShowdown
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/AaronCreor/FriendFlicks" target="_blank" rel="noreferrer">
-                  FriendFlicks
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/AaronCreor/LeetCodeSolutions" target="_blank" rel="noreferrer">
-                  LeetCodeSolutions
-                </a>
-              </li>
-            </ul>
+        <div class="projectCarousel" id="projectCarousel" aria-label="Featured projects carousel">
+          <div class="projectCarouselHeader">
+            <button
+              class="projectCarouselBtn"
+              id="projectCarouselPrev"
+              type="button"
+              aria-label="Previous project"
+              title="Previous project"
+            >
+              &#8592;
+            </button>
+            <button
+              class="projectCarouselBtn"
+              id="projectCarouselNext"
+              type="button"
+              aria-label="Next project"
+              title="Next project"
+            >
+              &#8594;
+            </button>
           </div>
 
-          <div class="card">
-            <h3>Interests</h3>
-            <div class="chips" aria-label="Competencies">
-              <span class="chip">Backend Systems</span>
-              <span class="chip">Systems Design</span>
-              <span class="chip">Data Structures &amp; Algorithms</span>
-              <span class="chip">Machine Learning</span>
-              <span class="chip">Operating Systems</span>
-              <span class="chip">Applied Artificial Intelligence</span>
+          <div class="projectCarouselViewport">
+            <div class="projectCarouselTrack" id="projectCarouselTrack">
+              <div class="projectSlide">
+                <a
+                  class="card projectCard"
+                  href="https://github.com/AaronCreor/StockMarketShowdown"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <h3 class="projectCardTitle">StockMarketShowdown</h3>
+                  <p class="projectDesc">
+                    A Kotlin Android stock market simulation game that combines app architecture with real app concerns like auth,
+                    data storage, networking, and media loading.
+                  </p>
+                  <div class="chips" aria-label="StockMarketShowdown technology">
+                    <span class="chip">Kotlin</span>
+                    <span class="chip">Firebase</span>
+                    <span class="chip">Retrofit + OkHttp</span>
+                    <span class="chip">Glide</span>
+                  </div>
+                </a>
+              </div>
+
+              <div class="projectSlide">
+                <a
+                  class="card projectCard"
+                  href="https://github.com/AaronCreor/FriendFlicks"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <h3 class="projectCardTitle">FriendFlicks</h3>
+                  <p class="projectDesc">
+                    A movie discovery app with a Java-based main application, supported by Python IMDb data scripts and a full
+                    project workflow that includes mockups and documentation.
+                  </p>
+                  <div class="chips" aria-label="FriendFlicks technology">
+                    <span class="chip">Java</span>
+                    <span class="chip">Python</span>
+                    <span class="chip">Gradle</span>
+                  </div>
+                </a>
+              </div>
+
+              <div class="projectSlide">
+                <a
+                  class="card projectCard"
+                  href="https://github.com/AaronCreor/LeetCodeSolutions"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <h3 class="projectCardTitle">LeetCodeSolutions</h3>
+                  <p class="projectDesc">
+                    An actively maintained algorithms repository showcasing data structures, problem-solving patterns, and consistent
+                    iteration through clean solution implementations.
+                  </p>
+                  <div class="chips" aria-label="LeetCodeSolutions technology">
+                    <span class="chip">Algorithms</span>
+                    <span class="chip">Data Structures</span>
+                    <span class="chip">Problem Solving</span>
+                  </div>
+                </a>
+              </div>
+
+              <div class="projectSlide">
+                <a
+                  class="card projectCard"
+                  href="https://github.com/AaronCreor/GalakZ"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <h3 class="projectCardTitle">GalakZ</h3>
+                  <p class="projectDesc">
+                    A simple space shooter game built in Java using Java2D, Swing, and AWT.
+                  </p>
+                  <div class="chips" aria-label="GalakZ technology">
+                    <span class="chip">Java</span>
+                    <span class="chip">Swing</span>
+                    <span class="chip">AWT</span>
+                  </div>
+                </a>
+              </div>
+
+              <div class="projectSlide">
+                <a
+                  class="card projectCard"
+                  href="https://github.com/AaronCreor/AaronCreor-website"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <h3 class="projectCardTitle">aaroncreor.com</h3>
+                  <p class="projectDesc">
+                    My personal portfolio site built with a lightweight stack and automated deployment, including custom UI polish,
+                    blog support, and PHP-backed GitHub stats.
+                  </p>
+                  <div class="chips" aria-label="aaroncreor.com technology">
+                    <span class="chip">HTML/CSS/JS</span>
+                    <span class="chip">PHP</span>
+                    <span class="chip">GitHub Actions</span>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -284,6 +376,10 @@
           </div>
         </details>
       </section>
+
+      <footer class="siteFooter" aria-label="Deployment info">
+        Last deployed via GitHub Actions on <span>__LAST_DEPLOYED_AT__</span>
+      </footer>
     </div>
   </main>
 

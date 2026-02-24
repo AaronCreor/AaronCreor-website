@@ -20,6 +20,11 @@ jobs:
             return '${{ secrets.GITHUBTOKEN }}';
             PHP
 
+      - name: Stamp deploy timestamp in footer
+        run: |
+          DEPLOYED_AT="$(date -u '+%b %d, %Y %H:%M UTC')"
+          sed -i "s|__LAST_DEPLOYED_AT__|${DEPLOYED_AT}|g" index.html
+
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
