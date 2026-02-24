@@ -22,6 +22,7 @@ jobs:
           server-dir: ${{ secrets.REMOTE_PATH || '/public_html/' }}
           exclude: |
             **/.git*
+            **/.git*/**
             **/.github/**
             **/node_modules/**
             **/.env*
