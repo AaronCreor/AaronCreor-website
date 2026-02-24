@@ -8,6 +8,14 @@
     name="description"
     content="Aaron Creor - Software Developer. Projects, links, and coding trackers."
   >
+  <script>
+    try {
+      const mode = localStorage.getItem("siteColorMode");
+      if (mode === "light" || mode === "dark") {
+        document.documentElement.setAttribute("data-color-mode", mode);
+      }
+    } catch {}
+  </script>
   <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
@@ -15,6 +23,28 @@
 
   <main class="wrap">
     <div class="container">
+      <div class="uiControls" aria-label="Display controls">
+        <button
+          id="themeToggle"
+          class="themeToggle"
+          type="button"
+          aria-label="Background mode: stars"
+          title="Background mode: stars"
+        >
+          &#10024;
+        </button>
+
+        <button
+          id="colorModeToggle"
+          class="themeToggle"
+          type="button"
+          aria-label="Color mode: dark"
+          title="Color mode: dark"
+        >
+          &#9899;
+        </button>
+      </div>
+
       <header>
         <h1 class="name">Aaron Creor</h1>
         <p class="tagline">
@@ -267,3 +297,4 @@
   <script src="js/index.js" defer></script>
 </body>
 </html>
+

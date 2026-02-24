@@ -1,0 +1,7 @@
+api/github-token.php
+
+.DS_Store
+Thumbs.db
+
+.vscode/
+.idea/
