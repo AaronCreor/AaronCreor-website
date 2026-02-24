@@ -1,11 +1,9 @@
 const canvas = document.getElementById("bg");
 const ctx = canvas?.getContext("2d", { alpha: true });
 const themeToggleButton = document.getElementById("themeToggle");
-const colorModeToggleButton = document.getElementById("colorModeToggle");
 
 const STORAGE_KEYS = {
   backgroundMode: "siteBackgroundMode",
-  colorMode: "siteColorMode",
 };
 
 const BACKGROUND_MODES = ["stars", "rain", "off"];
@@ -14,11 +12,6 @@ const BACKGROUND_MODE_META = {
   rain: { emoji: "\u{1F327}", label: "rain" },
   off: { emoji: "\u274C", label: "off" },
 };
-const COLOR_MODE_META = {
-  dark: { emoji: "\u26AB", label: "dark" },
-  light: { emoji: "\u26AA", label: "light" },
-};
-
 const state = {
   w: 0,
   h: 0,
@@ -27,8 +20,6 @@ const state = {
   raindrops: [],
   running: true,
   mode: "stars",
-  darkModeBackgroundMode: "stars",
-  colorMode: "dark",
   reduced:
     Boolean(window.matchMedia) &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches,
@@ -345,59 +336,23 @@ async function loadRecentBlogPosts() {
   }
 }
 
-function updateThemeToggleLockState() {
-  if (!themeToggleButton) return;
-
-  const locked = state.colorMode === "light";
-  themeToggleButton.disabled = locked;
-  if (locked) {
-    themeToggleButton.setAttribute("aria-label", "Background mode: off (locked in light mode)");
-    themeToggleButton.title = "Background mode: off (locked in light mode)";
-  }
-}
-
 function updateThemeToggleButton() {
   if (!themeToggleButton) return;
 
   const meta = BACKGROUND_MODE_META[state.mode];
   themeToggleButton.textContent = meta.emoji;
-  if (state.colorMode !== "light") {
-    themeToggleButton.setAttribute("aria-label", `Background mode: ${meta.label}`);
-    themeToggleButton.title = `Background mode: ${meta.label}`;
-  }
-  updateThemeToggleLockState();
-}
-
-function updateColorModeToggleButton() {
-  if (!colorModeToggleButton) return;
-
-  const meta = COLOR_MODE_META[state.colorMode];
-  colorModeToggleButton.textContent = meta.emoji;
-  colorModeToggleButton.setAttribute("aria-label", `Color mode: ${meta.label}`);
-  colorModeToggleButton.title = `Color mode: ${meta.label}`;
-}
-
-function applyColorMode() {
-  document.documentElement.setAttribute("data-color-mode", state.colorMode);
-  if (document.body) {
-    document.body.setAttribute("data-color-mode", state.colorMode);
-  }
+  themeToggleButton.disabled = false;
+  themeToggleButton.setAttribute("aria-label", `Background mode: ${meta.label}`);
+  themeToggleButton.title = `Background mode: ${meta.label}`;
 }
 
 function saveBackgroundMode() {
-  safeLocalStorageSet(STORAGE_KEYS.backgroundMode, state.darkModeBackgroundMode);
-}
-
-function saveColorMode() {
-  safeLocalStorageSet(STORAGE_KEYS.colorMode, state.colorMode);
+  safeLocalStorageSet(STORAGE_KEYS.backgroundMode, state.mode);
 }
 
 function cycleBackgroundMode() {
-  if (state.colorMode === "light") return;
-
-  const currentIndex = BACKGROUND_MODES.indexOf(state.darkModeBackgroundMode);
-  state.darkModeBackgroundMode = BACKGROUND_MODES[(currentIndex + 1) % BACKGROUND_MODES.length];
-  state.mode = state.darkModeBackgroundMode;
+  const currentIndex = BACKGROUND_MODES.indexOf(state.mode);
+  state.mode = BACKGROUND_MODES[(currentIndex + 1) % BACKGROUND_MODES.length];
   updateThemeToggleButton();
   saveBackgroundMode();
 
@@ -411,38 +366,11 @@ function cycleBackgroundMode() {
   }
 }
 
-function cycleColorMode() {
-  if (state.colorMode === "dark") {
-    state.colorMode = "light";
-    state.mode = "off";
-  } else {
-    state.colorMode = "dark";
-    state.mode = state.darkModeBackgroundMode;
-  }
-
-  applyColorMode();
-  updateColorModeToggleButton();
-  updateThemeToggleButton();
-  saveColorMode();
-
-  if (!state.running) {
-    state.running = true;
-    requestAnimationFrame(drawFrame);
-  }
-}
-
 function loadStoredPreferences() {
   const storedBackgroundMode = safeLocalStorageGet(STORAGE_KEYS.backgroundMode);
   if (BACKGROUND_MODES.includes(storedBackgroundMode)) {
-    state.darkModeBackgroundMode = storedBackgroundMode;
+    state.mode = storedBackgroundMode;
   }
-
-  const storedColorMode = safeLocalStorageGet(STORAGE_KEYS.colorMode);
-  if (storedColorMode === "dark" || storedColorMode === "light") {
-    state.colorMode = storedColorMode;
-  }
-
-  state.mode = state.colorMode === "light" ? "off" : state.darkModeBackgroundMode;
 }
 
 function initKeyboardShortcuts() {
@@ -468,17 +396,13 @@ function initThemeToggle() {
 }
 
 function initColorModeToggle() {
-  applyColorMode();
-  updateColorModeToggleButton();
-  if (!colorModeToggleButton) return;
-  colorModeToggleButton.addEventListener("click", cycleColorMode);
+  // Removed: site now uses dark mode only.
 }
 
 function initBackground() {
   if (!canvas || !ctx) return;
 
   loadStoredPreferences();
-  applyColorMode();
   window.addEventListener("resize", resizeBackground, { passive: true });
   initKeyboardShortcuts();
   initThemeToggle();
