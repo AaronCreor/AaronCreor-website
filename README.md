@@ -62,20 +62,6 @@ This keeps secrets out of tracked source files.
 return 'your_github_token_here';
 ```
 
-## Local Development
-
-Opening `index.html` directly with `file://` will **not** load language stats, because the PHP endpoint does not run from the filesystem.
-
-Run through a local PHP server instead:
-
-```powershell
-php -S localhost:8000
-```
-
-Then open:
-
-- `http://localhost:8000/index.html`
-
 ## Deployment (GitHub Actions + FTP)
 
 Deployment is configured in `.github/workflows/deploy.yml`.
@@ -98,5 +84,5 @@ Deployment is configured in `.github/workflows/deploy.yml`.
 - `FTP_USERNAME`
 - `FTP_PASSWORD`
 - `FTP_PORT`
-- `REMOTE_PATH` (must end with `/`, e.g. `/public_html/`)
+- `REMOTE_PATH`
 - `GITHUBTOKEN` (used to generate `api/github-token.php` during deploy)
