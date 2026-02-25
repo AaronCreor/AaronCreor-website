@@ -404,10 +404,11 @@ function initProjectCarousel() {
   }
 
   function setTransform(withTransition = true) {
-    const totalTrackSlides = track.children.length || 1;
-    const translatePercent = (currentIndex * 100) / totalTrackSlides;
+    const firstSlide = track.querySelector(".projectSlide");
+    const slideWidthPx = firstSlide ? firstSlide.getBoundingClientRect().width : 0;
+    const translatePx = currentIndex * slideWidthPx;
     track.style.transition = withTransition ? "transform 220ms ease" : "none";
-    track.style.transform = `translateX(-${translatePercent}%)`;
+    track.style.transform = `translateX(-${translatePx}px)`;
   }
 
   function updateAria() {
