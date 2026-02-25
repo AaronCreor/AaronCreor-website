@@ -318,7 +318,7 @@ code {
 
 .projectCarouselViewport {
   overflow: hidden;
-  margin: 0 -6px;
+  margin: 0;
   min-width: 0;
 }
 
@@ -331,11 +331,12 @@ code {
 .projectSlide {
   flex: 0 0 calc(100% / var(--project-visible-count, 1));
   min-width: 0;
+  padding: 0 6px;
 }
 
 .projectSlide .projectCard {
   height: 100%;
-  margin: 0 6px;
+  margin: 0;
 }
 
 .projectCard {
