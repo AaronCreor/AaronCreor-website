@@ -403,13 +403,11 @@ function initProjectCarousel() {
     return mediaQuery.matches ? Math.min(3, originalSlides.length) : 1;
   }
 
-  function stepPercent() {
-    return 100 / visibleCount;
-  }
-
   function setTransform(withTransition = true) {
+    const totalTrackSlides = track.children.length || 1;
+    const translatePercent = (currentIndex * 100) / totalTrackSlides;
     track.style.transition = withTransition ? "transform 220ms ease" : "none";
-    track.style.transform = `translateX(-${currentIndex * stepPercent()}%)`;
+    track.style.transform = `translateX(-${translatePercent}%)`;
   }
 
   function updateAria() {
