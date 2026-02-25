@@ -47,7 +47,7 @@
     function createBlogCard(post) {
       const link = document.createElement("a");
       link.className = "blogCard";
-      link.href = post.path.replace(/^blog\//, "");
+      link.href = post.path.startsWith("/") ? post.path : `/${post.path.replace(/^\/+/, "")}`;
 
       const title = document.createElement("h3");
       title.className = "blogCardTitle";
