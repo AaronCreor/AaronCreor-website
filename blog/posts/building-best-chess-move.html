@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building BestChessMove: Django, Hosting Friction, and a Practical Pivot | Aaron Creor Blog</title>
+  <meta name="description" content="A writeup on building BestChessMove, the original Django approach, shared hosting deployment issues, and the final implementation pivot.">
+  <link rel="stylesheet" href="../../css/index.css?v=20260225b">
+</head>
+<body>
+  <canvas id="bg" aria-hidden="true"></canvas>
+
+  <main class="wrap">
+    <div class="container">
+      <header>
+        <h1 class="name">Building best-chess-move.com: Django, Hosting Friction, and a Practical Pivot</h1>
+        <p class="tagline">Published Feb 26, 2026</p>
+        <nav class="links" aria-label="Post navigation">
+          <a href="../index.html">All Posts</a>
+          <a href="../../index.html">Home</a>
+        </nav>
+      </header>
+
+      <section class="section">
+        <h2>Why I Started This Project</h2>
+        <p>
+          I honestly had been looking for an excuse to code something chess related. I started playing chess seriously just a few years ago, and since then I&apos;ve become an intermediate level player
+          who occasionally plays in local tournaments.
+        </p>
+        <p>
+          From the start, I approached it like a real product instead of just a coding exercise. That meant thinking about mobile support, shared hosting constraints,
+          deployment, and a clean user experience, not just the engine logic.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>My First Approach: Django + Python-Chess</h2>
+        <p>
+          The original version of <strong>BestChessMove</strong> was built in Django using <code>python-chess</code>. The goal was to keep the backend responsible for
+          position parsing and move calculation, while the frontend handled the board interaction.
+        </p>
+        <p>
+          I also wanted the project to work with a cPanel/DirectAdmin style Python app setup, so I created the Django version with that deployment target in mind.
+          Functionally, the app already supported the core workflow: setting positions, syncing FEN, flipping the board, and requesting the next move.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>The Biggest Challenge: Hosting Environment, Not Code</h2>
+        <p>
+          The hardest part of this project was not the chess logic. It was shared hosting infrastructure.
+        </p>
+        <p>
+          The Django app itself validated correctly. WSGI imports worked, migrations worked, and the code was running locally. But on the target host, the Python web app
+          layer kept returning <code>503 Service Unavailable</code>. After debugging logs, the root cause ended up being the host&apos;s LiteSpeed/DirectAdmin Python
+          integration: the server was missing the required <code>lswsgi</code> binaries for multiple Python versions.
+        </p>
+        <p>
+          In other words, the project code was fine, but the server could not actually launch Python web apps correctly. That was an important lesson: deployment assumptions
+          matter as much as implementation details.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>The Pivot: Ship a Simpler Stack</h2>
+        <p>
+          Rather than keep fighting a broken Python runtime on shared hosting, I pivoted to a simpler deployment model: <strong>HTML + CSS + JavaScript + PHP</strong>.
+          I archived the Django implementation for reference and moved the live version to a PHP-based site that the host could serve reliably.
+        </p>
+        <p>
+          This let me preserve the user-facing functionality while removing the infrastructure blocker. The project still supports position setup, FEN input,
+          board flipping, mobile interaction, and best-move highlighting.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Current Implementation</h2>
+        <p>
+          The current version uses a JavaScript chessboard UI and a PHP API endpoint for move calculation. The move analysis is handled through the
+          Lichess Cloud Eval API, which gave me a practical way to provide strong move suggestions without running a chess engine process on the shared host.
+        </p>
+        <p>
+          The core implementation focuses on:
+        </p>
+        <ul>
+          <li>Drag-and-drop board editing with FEN synchronization</li>
+          <li>A PHP proxy endpoint for Lichess cloud evaluation</li>
+          <li>Move highlighting and clear result feedback</li>
+        </ul>
+        <p>
+          I also spent time on the UX details: drag-and-drop board editing, mobile touch support, FEN synchronization, and a cleaner interface that works on both desktop and mobile.
+          That part mattered to me because a chess tool only feels useful if entering positions is fast and frictionless.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>What I Took Away From It</h2>
+        <p>
+          This project reinforced something I keep seeing in real-world software work: the &quot;best&quot; architecture on paper is not always the best architecture for the
+          environment you actually have.
+        </p>
+        <p>
+          I still like the Django version and I&apos;m glad I built it, because it helped me validate the core design and backend logic. But the successful version was the one
+          that adapted to deployment reality and shipped. (You can still find it under <code>_django</code> in the repo!)
+        </p>
+        <p>
+          And honestly, that made the project more satisfying. I got to build something around a game I love, solve real integration problems, and end up with a tool that people can actually use.
+        </p>
+      </section>
+    </div>
+  </main>
+  <script src="../../js/index.js?v=20260225b" defer></script>
+</body>
+</html>

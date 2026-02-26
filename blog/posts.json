@@ -1,6 +1,13 @@
 {
   "posts": [
     {
+      "slug": "building-best-chess-move",
+      "title": "Building BestChessMove: Django, Hosting Friction, and a Practical Pivot",
+      "published": "2026-02-26",
+      "excerpt": "How I approached a chess project I cared about, why the original Django deployment failed on shared hosting, and how I adapted the implementation to ship anyway.",
+      "path": "/blog/posts/building-best-chess-move.html"
+    },
+    {
       "slug": "hello-world",
       "title": "Hello World",
       "published": "2026-02-24",
