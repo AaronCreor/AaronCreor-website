@@ -345,6 +345,59 @@ code {
   text-decoration: none;
 }
 
+.projectCardWithAction {
+  position: relative;
+  display: block;
+}
+
+.projectCardOverlayLink {
+  position: absolute;
+  inset: 0;
+  right: 48px;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+.projectCardOverlayLink:focus-visible {
+  outline: 2px solid rgba(145, 190, 255, 0.75);
+  outline-offset: 2px;
+}
+
+.projectCardContent {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.projectCardActionBtn {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 3;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  text-decoration: none;
+  line-height: 1;
+  font-size: 14px;
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.projectCardActionBtn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.projectCardActionBtn:focus-visible {
+  outline: 2px solid rgba(145, 190, 255, 0.75);
+  outline-offset: 2px;
+}
+
 .projectCard:hover {
   transform: translateY(-1px);
   border-color: rgba(255, 255, 255, 0.2);
@@ -718,6 +771,16 @@ html[data-color-mode="light"] .projectDesc {
 html[data-color-mode="light"] .projectCard:hover {
   border-color: rgba(15, 23, 42, 0.2);
   background: rgba(15, 23, 42, 0.05);
+}
+
+html[data-color-mode="light"] .projectCardActionBtn {
+  border-color: rgba(15, 23, 42, 0.12);
+  background: rgba(15, 23, 42, 0.03);
+}
+
+html[data-color-mode="light"] .projectCardActionBtn:hover {
+  border-color: rgba(15, 23, 42, 0.2);
+  background: rgba(15, 23, 42, 0.06);
 }
 
 html[data-color-mode="light"] .projectCarouselBtn {
