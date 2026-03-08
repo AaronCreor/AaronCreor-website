@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Measuring AI in My LinkedIn Feed with Python | Aaron Creor Blog</title>
+  <meta
+    name="description"
+    content="A writeup on building a Python utility that scans a LinkedIn feed for likely AI-assisted posts and generates shareable charts."
+  >
+  <link rel="stylesheet" href="../../css/index.css?v=20260225b">
+</head>
+<body>
+  <canvas id="bg" aria-hidden="true"></canvas>
+
+  <main class="wrap">
+    <div class="container">
+      <header>
+        <h1 class="name">Measuring AI in My LinkedIn Feed with Python</h1>
+        <p class="tagline">Published Mar 7, 2026</p>
+        <nav class="links" aria-label="Post navigation">
+          <a href="../index.html">All Posts</a>
+          <a href="../../index.html">Home</a>
+        </nav>
+      </header>
+
+      <section class="section">
+        <h2>Post</h2>
+        <p>
+          I kept noticing a pattern in my LinkedIn feed: a lot of posts felt polished in the same way. Similar hooks, similar pacing,
+          similar calls to action, and a growing amount of obvious AI-adjacent language. Instead of guessing, I decided to measure it.
+        </p>
+        <p>
+          The result was <a href="https://github.com/AaronCreor/LinkedInAIAnalysis" target="_blank" rel="noreferrer">LinkedInAIAnalysis</a>,
+          a small Python utility that logs into LinkedIn, samples posts from the feed, scores them for likely AI-assisted writing
+          patterns, and generates charts from the results.
+        </p>
+
+        <h2>How It Works</h2>
+        <p>
+          The script uses Playwright to open a logged-in LinkedIn session, scroll the feed, and collect post content. From there, it
+          applies a deliberately aggressive heuristic scorer. The goal is not to prove authorship or detect AI with certainty, but to
+          estimate how much of the feed looks shaped by AI-driven writing patterns.
+        </p>
+        <p>
+          The heuristic looks for signals like explicit AI keywords, list-heavy formatting, templated CTA language, repetitive phrasing,
+          high line-break density, and the kinds of punchy hooks that have become common in AI-assisted social posts.
+        </p>
+
+        <h2>What I Found</h2>
+        <p>
+          On my own sample, a meaningful share of posts landed in the medium and high AI-likelihood buckets. What stood out most was
+          that the strongest signals were often stylistic rather than topical. Some posts never mentioned ChatGPT, Claude, or AI at all,
+          but still looked heavily optimized around the same structure and cadence.
+        </p>
+        <p>
+          That was the interesting part for me. The feed is not just filling with posts about AI. It is increasingly filled with posts
+          that feel written in a converging style, whether they were fully generated, lightly assisted, or just modeled after the same
+          successful AI-era templates.
+        </p>
+
+        <h2>Why I Built It</h2>
+        <p>
+          I like small tools that answer questions I am already asking myself. This project was a good fit because it combined browser
+          automation, lightweight text analysis, and data visualization in a way that produced something immediately interpretable.
+        </p>
+        <p>
+          It also turned into a nice example of the practical engineering work that shows up in small projects: handling login state,
+          dealing with dynamic scroll containers, adjusting brittle selectors, and shaping the final output into something clean enough
+          to share publicly.
+        </p>
+
+        <h2>Repository</h2>
+        <p>
+          The source code is available here:
+          <a href="https://github.com/AaronCreor/LinkedInAIAnalysis" target="_blank" rel="noreferrer">
+            github.com/AaronCreor/LinkedInAIAnalysis
+          </a>
+        </p>
+      </section>
+    </div>
+  </main>
+  <script src="../../js/index.js?v=20260225b" defer></script>
+</body>
+</html>

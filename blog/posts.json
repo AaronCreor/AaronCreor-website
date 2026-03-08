@@ -1,6 +1,13 @@
 {
   "posts": [
     {
+      "slug": "measuring-ai-in-my-linkedin-feed",
+      "title": "Measuring AI in My LinkedIn Feed with Python",
+      "published": "2026-03-07",
+      "excerpt": "I built a Python utility that logs into LinkedIn, samples my feed, scores likely AI-assisted writing patterns, and turns the results into shareable charts.",
+      "path": "/blog/posts/measuring-ai-in-my-linkedin-feed.html"
+    },
+    {
       "slug": "building-best-chess-move",
       "title": "Building BestChessMove: Django, Hosting Friction, and a Practical Pivot",
       "published": "2026-02-26",
