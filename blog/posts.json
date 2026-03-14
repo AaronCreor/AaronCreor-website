@@ -1,6 +1,13 @@
 {
   "posts": [
     {
+      "slug": "building-pyfuncai",
+      "title": "Building PyFuncAI: Prompt-Defined Functions as a Python Library",
+      "published": "2026-03-13",
+      "excerpt": "Why I built PyFuncAI, how prompt-defined functions became a Python library abstraction, and what it took to make the idea feel like a real developer tool.",
+      "path": "/blog/posts/building-pyfuncai.html"
+    },
+    {
       "slug": "measuring-ai-in-my-linkedin-feed",
       "title": "Measuring AI in My LinkedIn Feed with Python",
       "published": "2026-03-07",

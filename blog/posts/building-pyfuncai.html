@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building PyFuncAI: Prompt-Defined Functions as a Python Library | Aaron Creor Blog</title>
+  <meta
+    name="description"
+    content="A writeup on building PyFuncAI, a Python library for defining functions with prompts and generating callable implementations at runtime."
+  >
+  <link rel="stylesheet" href="../../css/index.css?v=20260225b">
+</head>
+<body>
+  <canvas id="bg" aria-hidden="true"></canvas>
+
+  <main class="wrap">
+    <div class="container">
+      <header>
+        <h1 class="name">Building PyFuncAI: Prompt-Defined Functions as a Python Library</h1>
+        <p class="tagline">Published Mar 13, 2026</p>
+        <nav class="links" aria-label="Post navigation">
+          <a href="../index.html">All Posts</a>
+          <a href="../../index.html">Home</a>
+        </nav>
+      </header>
+
+      <section class="section">
+        <h2>Why I Built It</h2>
+        <p>
+          Most AI tooling in software today lives outside the codebase. You prompt a chatbot, copy the output, and then manually decide
+          what belongs in the actual program. I wanted to explore a different idea: what if prompt-defined behavior could be treated as
+          a library primitive instead of an external workflow?
+        </p>
+        <p>
+          That question turned into <a href="https://github.com/AaronCreor/PyFuncAI" target="_blank" rel="noreferrer">PyFuncAI</a>,
+          a Python library that lets you describe a function in plain language, generate the implementation through an LLM, and get back
+          a normal callable function object.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>The Core Idea</h2>
+        <p>
+          The part that interested me was not just code generation by itself. It was making code generation feel like part of the normal
+          programming model. Instead of treating the model as an assistant sitting beside the code, PyFuncAI treats it as part of the
+          function creation path.
+        </p>
+        <p>
+          A simple example looks like this:
+        </p>
+        <p>
+          <code>greet = create_function("Return a short greeting for the provided name.", signature="(name: str) -&gt; str")</code>
+        </p>
+        <p>
+          The result is not a string response or a code snippet in a chat window. It is a callable Python function that can be invoked,
+          cached, and inspected like any other runtime object.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>What I Wanted The Library To Do Well</h2>
+        <p>
+          If this idea was going to be more than a novelty, it had to behave like a real library. That meant thinking about the full
+          lifecycle around generated code, not just the first successful demo.
+        </p>
+        <p>
+          The implementation focuses on:
+        </p>
+        <ul>
+          <li>Lazy or eager function generation</li>
+          <li>Support for local and hosted models</li>
+          <li>Disk caching for repeatability across runs</li>
+          <li>Validation before generated code is executed</li>
+          <li>Standard Python packaging and release workflows</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Provider Support And Runtime Design</h2>
+        <p>
+          I wanted the library to be useful both for local experimentation and for hosted model APIs. PyFuncAI currently supports local
+          models through Ollama, and remote providers through OpenAI and Gemini.
+        </p>
+        <p>
+          The runtime is intentionally small: connect to a provider, build a prompt from the requested function behavior and signature,
+          validate the returned source, compile it, and optionally reuse it from cache later. That made it possible to keep the API
+          compact while still supporting a few different workflows.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>The Hard Part: Treating Generated Code Seriously</h2>
+        <p>
+          The most important part of the project was not asking a model for Python. It was deciding how much structure to impose on the
+          generated result before allowing it to run.
+        </p>
+        <p>
+          PyFuncAI validates the generated source, checks that the function signature matches the requested one, restricts imports, and
+          executes the code with a limited builtin environment. It is still experimental, but I wanted the project to acknowledge that
+          generated code is still code, not just text.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Why I Think It Is Interesting</h2>
+        <p>
+          What makes this project interesting to me is that it explores a different interface for writing software. Some functions are
+          still authored manually. Others can be specified declaratively inside the codebase itself and materialized when needed.
+        </p>
+        <p>
+          I do not think that replaces normal programming. But I do think it opens up a category that is worth exploring seriously:
+          prompt-defined functions as a library abstraction, not just a demo gimmick.
+        </p>
+      </section>
+    </div>
+  </main>
+  <script src="../../js/index.js?v=20260225b" defer></script>
+</body>
+</html>
