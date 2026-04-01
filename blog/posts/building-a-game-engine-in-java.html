@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What It&apos;s Like to Build a Game Engine in Java | Aaron Creor Blog</title>
+  <meta
+    name="description"
+    content="A high-level reflection on what it feels like to build a game engine in Java, from rendering and tools to iteration, complexity, and long-term design tradeoffs."
+  >
+  <link rel="stylesheet" href="../../css/index.css?v=20260225b">
+</head>
+<body>
+  <canvas id="bg" aria-hidden="true"></canvas>
+
+  <main class="wrap">
+    <div class="container">
+      <header>
+        <h1 class="name">What It&apos;s Like to Build a Game Engine in Java</h1>
+        <p class="tagline">Published Mar 31, 2026</p>
+        <nav class="links" aria-label="Post navigation">
+          <a href="../index.html">All Posts</a>
+          <a href="../../index.html">Home</a>
+        </nav>
+      </header>
+
+      <section class="section">
+        <h2>Why I Started</h2>
+        <p>
+          Lately I&apos;ve been working on an engine for a game in Java, and one thing that stands out quickly is how different it feels
+          from building a normal application. In most software projects, a lot of the structure already exists for you. In engine work,
+          you end up creating the structure itself.
+        </p>
+        <p>
+          That is a big part of the appeal for me. You are not just implementing a feature. You are building the systems that make later
+          features possible.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Everything Connects To Everything Else</h2>
+        <p>
+          A game engine sounds like one thing, but it is really a collection of systems that all depend on each other: rendering, input,
+          audio, assets, UI, timing, game state, and tooling. Even a small change in one area can ripple through the rest of the project.
+        </p>
+        <p>
+          That makes engine development both satisfying and demanding. When a new system clicks into place, progress feels real. But it
+          also means there are very few isolated problems. Most of the work is about making different pieces cooperate cleanly.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>The Interesting Part Is Not Just Graphics</h2>
+        <p>
+          When people hear &quot;game engine,&quot; they usually think about graphics first. Rendering is obviously a major part of it, but it is
+          only one slice of the experience. A good engine also needs to load content reliably, update simulation consistently, expose
+          clear abstractions to the game code, and stay understandable as the project grows.
+        </p>
+        <p>
+          In practice, a lot of engine work is about boring-sounding decisions that matter a lot: how assets are organized, how data is
+          passed around, how game objects are updated, how much logic should be data-driven, and how to avoid turning the codebase into
+          a pile of special cases.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Java Makes It An Interesting Choice</h2>
+        <p>
+          Building a game engine in Java is interesting because it sits a little outside the default expectations people have for engine
+          development. That is part of why I like it. Java gives me a language I already enjoy working in, with strong tooling, a solid
+          runtime, and a development workflow that feels productive.
+        </p>
+        <p>
+          At the same time, it forces more intentional decisions. You think more carefully about how you interface with lower-level
+          libraries, how you structure performance-sensitive code, and how to keep the engine both practical and pleasant to work on.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>It Changes How You Think About Features</h2>
+        <p>
+          One thing I like about engine work is that every feature has two layers. There is the visible result, and then there is the
+          reusable capability underneath it. If you add a camera system, an asset pipeline, or a UI layer, you are not just solving
+          today&apos;s problem. You are creating leverage for future work.
+        </p>
+        <p>
+          That changes the mindset quite a bit. It pushes you to think about maintainability, extensibility, and iteration speed much
+          earlier than you normally would.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Why I Find It Worthwhile</h2>
+        <p>
+          Building a game engine is challenging partly because the finish line keeps moving. As soon as one system works, you see three
+          more places it could be cleaner, faster, or easier to build on. But that is also what makes it rewarding.
+        </p>
+        <p>
+          You get to shape the foundation of the game directly. And when the game starts to feel more real, it is not just because one
+          feature was added. It is because the underlying engine is slowly becoming capable enough to support the kind of experience you
+          actually want to make.
+        </p>
+      </section>
+    </div>
+  </main>
+  <script src="../../js/index.js?v=20260225b" defer></script>
+</body>
+</html>

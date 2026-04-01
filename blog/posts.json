@@ -1,6 +1,13 @@
 {
   "posts": [
     {
+      "slug": "building-a-game-engine-in-java",
+      "title": "What It's Like to Build a Game Engine in Java",
+      "published": "2026-03-31",
+      "excerpt": "A high-level reflection on building a game engine in Java, and why engine work feels so different from ordinary application development.",
+      "path": "/blog/posts/building-a-game-engine-in-java.html"
+    },
+    {
       "slug": "building-pyfuncai",
       "title": "Building PyFuncAI: Prompt-Defined Functions as a Python Library",
       "published": "2026-03-13",
