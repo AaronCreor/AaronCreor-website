@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Projects | Aaron Creor</title>
+  <meta
+    name="description"
+    content="Small interactive utilities and experiments by Aaron Creor."
+  >
+  <link rel="stylesheet" href="css/index.css?v=20260426c">
+</head>
+<body>
+  <canvas id="bg" aria-hidden="true"></canvas>
+
+  <main class="wrap">
+    <div class="container">
+      <div class="uiControls" aria-label="Display controls">
+        <button
+          id="themeToggle"
+          class="themeToggle"
+          type="button"
+          aria-label="Background mode: stars"
+          title="Background mode: stars"
+        >
+          &#10024;
+        </button>
+      </div>
+
+      <header class="toolHeader">
+        <a class="sectionLinkButton backLink" href="index.html">Back to homepage</a>
+        <h1 class="name">Mini Projects</h1>
+        <p class="tagline">
+          Small utilities, experiments, and focused tools.
+        </p>
+      </header>
+
+      <section class="section">
+        <div class="miniProjectList">
+          <a class="miniProjectCard" href="email-classifier.html">
+            <div class="miniProjectMeta">
+              <h2 class="miniProjectTitle">Email Classifier Agent</h2>
+              <p>
+                Paste an IT ticket email body and classify it as a request, incident, or needs human review.
+              </p>
+              <div class="chips">
+                <span class="chip">Azure AI Foundry</span>
+                <span class="chip">AI Agents</span>
+              </div>
+            </div>
+            <span class="miniProjectArrow" aria-hidden="true">&#8594;</span>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/index.js?v=20260426c" defer></script>
+</body>
+</html>

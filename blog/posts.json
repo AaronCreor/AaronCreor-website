@@ -1,6 +1,13 @@
 {
   "posts": [
     {
+      "slug": "learning-custom-ai-agents",
+      "title": "Learning Custom AI Agents by Building Small Tools",
+      "published": "2026-04-27",
+      "excerpt": "A reflection on learning custom AI agents, AI tooling, RAG, and why small focused projects are a good way to understand how AI systems are actually built.",
+      "path": "/blog/posts/learning-custom-ai-agents.html"
+    },
+    {
       "slug": "building-a-game-engine-in-java",
       "title": "What It's Like to Build a Game Engine in Java",
       "published": "2026-03-31",

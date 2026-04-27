@@ -63,6 +63,29 @@ function extract_classification(string $content): string
     return normalize_classification($content);
 }
 
+function should_route_to_human_review(string $emailBody): bool
+{
+    $normalized = strtolower($emailBody);
+    $humanReviewSignals = [
+        'bbb',
+        'better business bureau',
+        'reporting your company',
+        'report your company',
+        'customer complaint',
+        'formal complaint',
+        'lawsuit',
+        'legal action',
+    ];
+
+    foreach ($humanReviewSignals as $signal) {
+        if (strpos($normalized, $signal) !== false) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function call_classifier_model(string $endpoint, string $credential, string $credentialType, string $model, string $emailBody): array
 {
     $url = rtrim($endpoint, '/') . '/chat/completions';
@@ -88,8 +111,9 @@ function call_classifier_model(string $endpoint, string $credential, string $cre
                 'content' =>
                     "You are an IT ticket triage agent. Classify the pasted email body into exactly one label.\n" .
                     "Use request when the sender asks for a standard service, access, information, a change, equipment, or help that is not caused by broken or degraded service.\n" .
-                    "Use incident when the sender reports an unplanned interruption, outage, error, degraded service, security concern, or something broken that prevents normal work.\n" .
-                    "Use needs_human_review when the email is ambiguous, mixed, missing important context, non-IT, sensitive, spam-like, or cannot be confidently classified.\n" .
+                    "Use incident only when the sender reports an IT system, account, device, application, network, or security issue causing an unplanned interruption, outage, error, degradation, or broken workflow.\n" .
+                    "Use needs_human_review for anything outside IT ticket triage, including customer complaints, profanity-only complaints, BBB/legal threats, billing/product/company-service complaints, non-IT service complaints, ambiguous messages, mixed requests, missing context, sensitive content, spam-like content, or anything you cannot confidently classify.\n" .
+                    "Example: \"Your service sucks! I'm reporting your company to the BBB!\" is needs_human_review because it is a non-IT customer complaint/legal escalation.\n" .
                     "Return only compact JSON in this shape: {\"classification\":\"request\"}. The value must be request, incident, or needs_human_review.",
             ],
             [
@@ -187,6 +211,10 @@ if ($length === 0) {
 
 if ($length > EMAIL_MAX_CHARS) {
     respond_json(400, ['error' => 'Email body must be 1000 characters or fewer.']);
+}
+
+if (should_route_to_human_review($emailBody)) {
+    respond_json(200, ['classification' => 'needs_human_review']);
 }
 
 try {

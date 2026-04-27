@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning Custom AI Agents by Building Small Tools | Aaron Creor Blog</title>
+  <meta
+    name="description"
+    content="A reflection on learning custom AI agents, AI tooling, RAG, and why small focused agent projects are a good way to understand the space."
+  >
+  <link rel="stylesheet" href="../../css/index.css?v=20260426c">
+</head>
+<body>
+  <canvas id="bg" aria-hidden="true"></canvas>
+
+  <main class="wrap">
+    <div class="container">
+      <header>
+        <h1 class="name">Learning Custom AI Agents by Building Small Tools</h1>
+        <p class="tagline">Published Apr 27, 2026</p>
+        <nav class="links" aria-label="Post navigation">
+          <a href="../index.html">All Posts</a>
+          <a href="../../index.html">Home</a>
+        </nav>
+      </header>
+
+      <section class="section">
+        <h2>Why This Is Interesting To Me</h2>
+        <p>
+          I have been spending more time learning about custom AI agents and the tooling around them. Not just prompting a model and
+          reading the answer, but building small systems where a model can take structured input, use tools, follow constraints, and
+          return something useful in a repeatable way.
+        </p>
+        <p>
+          That shift is interesting because it feels closer to normal software engineering. The model is important, but the surrounding
+          system matters just as much: the inputs, the available tools, the guardrails, the data sources, the evaluation strategy, and
+          the way the result is presented back to the user.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>What I Mean By An Agent</h2>
+        <p>
+          The word agent gets used broadly, so I am trying to keep my own definition practical. For me, an agent is a focused workflow
+          where an AI model is given a job, a limited set of actions, and enough context to make a useful decision or produce a useful
+          result.
+        </p>
+        <p>
+          That can be something small. It does not need to be a fully autonomous system wandering through a codebase or making huge
+          decisions on its own. A useful agent can classify an email, summarize a document, search a knowledge base, draft a response,
+          or help route work to the right place.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>The Tooling Is The Real Work</h2>
+        <p>
+          The more I look at AI tooling, the more I think the interesting engineering is around the edges of the model. A good agent
+          needs clear instructions, predictable inputs and outputs, error handling, retries, limits, logging, and ways to fail safely.
+          In other words, it needs the same kind of boring infrastructure that makes ordinary software dependable.
+        </p>
+        <p>
+          I have also been thinking about how hard classification should work. If a tool is only allowed to return one of a few answers,
+          the prompt and the surrounding code need to make that boundary explicit. The model should not invent new categories, and the
+          application should still handle uncertain or out-of-scope input gracefully.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Where RAG Fits In</h2>
+        <p>
+          Retrieval-augmented generation is another area I want to get more comfortable with. RAG is appealing because it gives an AI
+          system a way to answer from a specific body of information instead of relying only on whatever the model already knows.
+        </p>
+        <p>
+          The engineering questions around RAG are practical ones: what gets indexed, how chunks are created, how retrieval is ranked,
+          how much context is passed to the model, and how the final answer should cite or reflect the retrieved material. It is not
+          just a model problem. It is a search, data modeling, and user experience problem too.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Why Small Agents Make Sense</h2>
+        <p>
+          My plan is to keep building <a href="../../mini-projects.html">small agents as learning projects</a>. Small tools are useful
+          because they make the tradeoffs visible. A narrow agent has a clear purpose, which makes it easier to test whether the
+          instructions, retrieval, tool calls, and output format are actually working.
+        </p>
+        <p>
+          The email classifier agent is a good example of the kind of project I want to make more of. It has a simple interface, a
+          constrained output, and enough ambiguity to force real design decisions. Is this an incident, a request, or something that
+          needs a person? That sounds small, but the edge cases quickly become interesting.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>What I Want To Learn Next</h2>
+        <p>
+          I want to get better at designing agents that feel less like demos and more like reliable utilities. That means learning how
+          to structure prompts, connect tools, use retrieved context, handle uncertainty, and build interfaces that make the AI&apos;s
+          output easy to understand.
+        </p>
+        <p>
+          I expect the best way to learn that is through a collection of small, focused projects. Each one can teach a different piece:
+          classification, retrieval, summarization, routing, tool use, evaluation, and deployment. Over time, those small experiments
+          should add up to a much better understanding of how AI systems are actually built.
+        </p>
+      </section>
+    </div>
+  </main>
+  <script src="../../js/index.js?v=20260426c" defer></script>
+</body>
+</html>

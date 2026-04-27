@@ -604,10 +604,104 @@ details a:hover {
   text-decoration: underline;
 }
 
+.extraLinkCard {
+  display: block;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 650;
+  text-decoration: none;
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.extraLinkCard:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.toolHeader {
+  gap: 12px;
+}
+
+.toolNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.backLink {
+  width: fit-content;
+}
+
+.miniProjectList {
+  display: grid;
+  gap: 12px;
+}
+
+.miniProjectCard {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.miniProjectCard:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.miniProjectMeta {
+  min-width: 0;
+}
+
+.miniProjectTitle {
+  margin: 0 0 8px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.miniProjectCard p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13.75px;
+  line-height: 1.55;
+}
+
+.miniProjectArrow {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.82);
+}
+
 .emailClassifier {
   display: grid;
   gap: 10px;
   margin-top: 12px;
+}
+
+.emailClassifierStandalone {
+  margin-top: 0;
 }
 
 .emailClassifierLabel {
@@ -850,6 +944,9 @@ html[data-color-mode="light"] .card,
 html[data-color-mode="light"] .list a,
 html[data-color-mode="light"] .blogCard,
 html[data-color-mode="light"] details,
+html[data-color-mode="light"] .extraLinkCard,
+html[data-color-mode="light"] .miniProjectCard,
+html[data-color-mode="light"] .miniProjectArrow,
 html[data-color-mode="light"] .badgeCard,
 html[data-color-mode="light"] .tracker img,
 html[data-color-mode="light"] .mediaFrame,
@@ -863,6 +960,8 @@ html[data-color-mode="light"] .emailClassifierResult {
 html[data-color-mode="light"] .links a:hover,
 html[data-color-mode="light"] .list a:hover,
 html[data-color-mode="light"] .blogCard:hover,
+html[data-color-mode="light"] .extraLinkCard:hover,
+html[data-color-mode="light"] .miniProjectCard:hover,
 html[data-color-mode="light"] .badgeCard:hover {
   border-color: rgba(15, 23, 42, 0.2);
   background: rgba(15, 23, 42, 0.05);
@@ -889,6 +988,9 @@ html[data-color-mode="light"] .list a,
 html[data-color-mode="light"] .sectionLinkButton,
 html[data-color-mode="light"] details a,
 html[data-color-mode="light"] summary,
+html[data-color-mode="light"] .extraLinkCard,
+html[data-color-mode="light"] .miniProjectTitle,
+html[data-color-mode="light"] .miniProjectArrow,
 html[data-color-mode="light"] .badgeCard,
 html[data-color-mode="light"] .emailClassifier textarea,
 html[data-color-mode="light"] .emailClassifierResultLabel {
@@ -902,6 +1004,10 @@ html[data-color-mode="light"] code {
 }
 
 html[data-color-mode="light"] .blogCardExcerpt {
+  color: rgba(15, 23, 42, 0.74);
+}
+
+html[data-color-mode="light"] .miniProjectCard p {
   color: rgba(15, 23, 42, 0.74);
 }
 
