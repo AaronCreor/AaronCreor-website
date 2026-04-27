@@ -642,10 +642,7 @@ details a:hover {
 }
 
 .miniProjectCard {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 14px;
+  display: block;
   padding: 14px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
@@ -680,18 +677,6 @@ details a:hover {
   color: var(--muted);
   font-size: 13.75px;
   line-height: 1.55;
-}
-
-.miniProjectArrow {
-  display: grid;
-  flex: 0 0 auto;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.82);
 }
 
 .emailClassifier {
@@ -946,7 +931,6 @@ html[data-color-mode="light"] .blogCard,
 html[data-color-mode="light"] details,
 html[data-color-mode="light"] .extraLinkCard,
 html[data-color-mode="light"] .miniProjectCard,
-html[data-color-mode="light"] .miniProjectArrow,
 html[data-color-mode="light"] .badgeCard,
 html[data-color-mode="light"] .tracker img,
 html[data-color-mode="light"] .mediaFrame,
@@ -990,7 +974,6 @@ html[data-color-mode="light"] details a,
 html[data-color-mode="light"] summary,
 html[data-color-mode="light"] .extraLinkCard,
 html[data-color-mode="light"] .miniProjectTitle,
-html[data-color-mode="light"] .miniProjectArrow,
 html[data-color-mode="light"] .badgeCard,
 html[data-color-mode="light"] .emailClassifier textarea,
 html[data-color-mode="light"] .emailClassifierResultLabel {
