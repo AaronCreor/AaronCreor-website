@@ -5,8 +5,8 @@ Personal portfolio website with a lightweight PHP API endpoint for GitHub langua
 ## Purpose
 
 - Serve a fast personal website/portfolio (`index.html`)
-- Provide a standalone IT ticket email classifier page (`email-classifier.html`)
-- Provide a mini projects index page (`mini-projects.html`)
+- Provide a mini projects index page (`mini-projects/index.html`)
+- Provide a standalone IT ticket email classifier page (`mini-projects/email-classifier.html`)
 - Display static portfolio content (resume, research PDF, media)
 - Load GitHub language frequency data dynamically via a small PHP endpoint
 - Classify pasted IT ticket email text as a request, incident, or human-review case

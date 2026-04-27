@@ -1,6 +1,8 @@
 const canvas = document.getElementById("bg");
 const ctx = canvas?.getContext("2d", { alpha: true });
 const themeToggleButton = document.getElementById("themeToggle");
+const scriptBaseUrl = new URL(document.currentScript?.src || "js/index.js", window.location.href);
+const apiBaseUrl = new URL("../api/", scriptBaseUrl);
 
 const STORAGE_KEYS = {
   backgroundMode: "siteBackgroundMode",
@@ -442,7 +444,7 @@ function initEmailClassifier() {
     setStatus("Classifying...", "isLoading");
 
     try {
-      const response = await fetch("api/email-classifier.php", {
+      const response = await fetch(new URL("email-classifier.php", apiBaseUrl), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ emailBody: textarea.value }),
