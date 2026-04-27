@@ -12,6 +12,21 @@ const BACKGROUND_MODE_META = {
   rain: { emoji: "\u{1F327}", label: "rain" },
   off: { emoji: "\u274C", label: "off" },
 };
+const EMAIL_CLASSIFIER_MAX_CHARS = 1000;
+const EMAIL_CLASSIFIER_LABELS = {
+  request: {
+    label: "Request",
+    text: "This reads like a standard service, access, information, or change request.",
+  },
+  incident: {
+    label: "Incident",
+    text: "This reads like a service interruption, error, outage, degradation, or broken-workflow report.",
+  },
+  needs_human_review: {
+    label: "Needs Human Review",
+    text: "This email is ambiguous, mixed, missing context, sensitive, or otherwise needs a person to triage it.",
+  },
+};
 const state = {
   w: 0,
   h: 0,
@@ -43,6 +58,20 @@ function safeLocalStorageSet(key, value) {
   } catch {
     // Ignore restricted storage
   }
+}
+
+function isTypingTarget(target) {
+  if (!(target instanceof HTMLElement)) {
+    return false;
+  }
+
+  const tagName = target.tagName.toLowerCase();
+  return (
+    tagName === "input" ||
+    tagName === "textarea" ||
+    tagName === "select" ||
+    target.isContentEditable
+  );
 }
 
 function makeStar() {
@@ -336,6 +365,108 @@ async function loadRecentBlogPosts() {
   }
 }
 
+function initEmailClassifier() {
+  const form = document.getElementById("emailClassifierForm");
+  const textarea = document.getElementById("emailClassifierBody");
+  const counter = document.getElementById("emailClassifierCount");
+  const submitButton = document.getElementById("emailClassifierSubmit");
+  const status = document.getElementById("emailClassifierStatus");
+  const result = document.getElementById("emailClassifierResult");
+  const resultLabel = document.getElementById("emailClassifierResultLabel");
+  const resultText = document.getElementById("emailClassifierResultText");
+
+  if (
+    !form ||
+    !textarea ||
+    !counter ||
+    !submitButton ||
+    !status ||
+    !result ||
+    !resultLabel ||
+    !resultText
+  ) {
+    return;
+  }
+
+  let isLoading = false;
+
+  function updateCounter() {
+    const count = textarea.value.length;
+    const isOverLimit = count > EMAIL_CLASSIFIER_MAX_CHARS;
+
+    counter.textContent = `${count}/${EMAIL_CLASSIFIER_MAX_CHARS}`;
+    counter.classList.toggle("isOverLimit", isOverLimit);
+    submitButton.disabled = isLoading || isOverLimit || textarea.value.trim().length === 0;
+  }
+
+  function setStatus(message, className = "") {
+    status.textContent = message;
+    status.className = `emailClassifierStatus${className ? ` ${className}` : ""}`;
+  }
+
+  function clearResult() {
+    result.hidden = true;
+    result.removeAttribute("data-classification");
+    resultLabel.textContent = "";
+    resultText.textContent = "";
+  }
+
+  function showResult(classification) {
+    const safeClassification = EMAIL_CLASSIFIER_LABELS[classification]
+      ? classification
+      : "needs_human_review";
+    const meta = EMAIL_CLASSIFIER_LABELS[safeClassification];
+
+    result.dataset.classification = safeClassification;
+    resultLabel.textContent = meta.label;
+    resultText.textContent = meta.text;
+    result.hidden = false;
+  }
+
+  textarea.addEventListener("input", () => {
+    updateCounter();
+    setStatus("");
+  });
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    updateCounter();
+
+    if (submitButton.disabled) {
+      return;
+    }
+
+    isLoading = true;
+    updateCounter();
+    clearResult();
+    setStatus("Classifying...", "isLoading");
+
+    try {
+      const response = await fetch("api/email-classifier.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ emailBody: textarea.value }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || `Classifier failed with status ${response.status}`);
+      }
+
+      showResult(data.classification);
+      setStatus("");
+    } catch (error) {
+      console.warn(error);
+      setStatus(error.message || "Classifier unavailable. Please try again later.", "isError");
+    } finally {
+      isLoading = false;
+      updateCounter();
+    }
+  });
+
+  updateCounter();
+}
+
 function updateThemeToggleButton() {
   if (!themeToggleButton) return;
 
@@ -497,6 +628,10 @@ function initProjectCarousel() {
 
 function initKeyboardShortcuts() {
   window.addEventListener("keydown", (event) => {
+    if (isTypingTarget(event.target)) {
+      return;
+    }
+
     const key = (event.key || "").toLowerCase();
 
     if (key === "p") {
@@ -535,5 +670,6 @@ function initBackground() {
 
 initBackground();
 initProjectCarousel();
+initEmailClassifier();
 loadLanguageFrequency();
 loadRecentBlogPosts();

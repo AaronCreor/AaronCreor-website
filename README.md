@@ -7,6 +7,7 @@ Personal portfolio website with a lightweight PHP API endpoint for GitHub langua
 - Serve a fast personal website/portfolio (`index.html`)
 - Display static portfolio content (resume, research PDF, media)
 - Load GitHub language frequency data dynamically via a small PHP endpoint
+- Classify pasted IT ticket email text as a request, incident, or human-review case
 - Deploy automatically to shared hosting using GitHub Actions
 
 ## Stack
@@ -14,7 +15,7 @@ Personal portfolio website with a lightweight PHP API endpoint for GitHub langua
 - `HTML5` (`index.html`)
 - `CSS` (`css/index.css`)
 - `JavaScript` (`js/index.js`)
-- `PHP` (`api/github-langs.php`) for GitHub API requests and aggregation
+- `PHP` (`api/github-langs.php`, `api/email-classifier.php`) for API requests and aggregation
 - `GitHub Actions` for CI/CD
 - `FTP` deployment using `SamKirkland/FTP-Deploy-Action`
 
@@ -44,6 +45,7 @@ Personal portfolio website with a lightweight PHP API endpoint for GitHub langua
 - `index.html` loads the page layout and references `css/index.css` + `js/index.js`
 - `js/index.js` calls `api/github-langs.php?user=AaronCreor`
 - `api/github-langs.php` fetches GitHub repo language data, aggregates it, and returns JSON
+- `api/email-classifier.php` calls the configured Azure AI inference endpoint server-side and returns a hard classification
 - The language frequency UI is rendered client-side in JavaScript
 
 ## GitHub Token Handling (API)
@@ -54,6 +56,15 @@ Personal portfolio website with a lightweight PHP API endpoint for GitHub langua
 2. `GITHUB_TOKEN` environment variable
 
 This keeps secrets out of tracked source files.
+
+## Azure AI Handling (Email Classifier)
+
+`api/email-classifier.php` supports two configuration sources:
+
+1. `api/azure-ai-config.php` (generated at deploy time)
+2. Environment variables
+
+The generated config supports `AZURE_AI_ENDPOINT`, `AZURE_AI_PROJECT_ENDPOINT`, `AZURE_AI_KEY`, `AZURE_AI_TOKEN`, and `AZURE_AI_MODEL`. If no Azure token is provided, the deploy workflow falls back to `GITHUBTOKEN` for GitHub Models-style inference.
 
 ### `api/github-token.php` format
 
@@ -86,3 +97,6 @@ Deployment is configured in `.github/workflows/deploy.yml`.
 - `FTP_PORT`
 - `REMOTE_PATH`
 - `GITHUBTOKEN` (used to generate `api/github-token.php` during deploy)
+- `AZURE_AI_ENDPOINT`
+- `AZURE_AI_PROJECT_ENDPOINT`
+- Optional: `AZURE_AI_KEY`, `AZURE_AI_TOKEN`, `AZURE_AI_MODEL`

@@ -20,6 +20,17 @@ jobs:
             return '${{ secrets.GITHUBTOKEN }}';
             PHP
 
+            cat > api/azure-ai-config.php <<'PHP'
+            <?php
+            return [
+                'endpoint' => '${{ secrets.AZURE_AI_ENDPOINT }}',
+                'project_endpoint' => '${{ secrets.AZURE_AI_PROJECT_ENDPOINT }}',
+                'api_key' => '${{ secrets.AZURE_AI_KEY }}',
+                'token' => '${{ secrets.AZURE_AI_TOKEN || secrets.GITHUBTOKEN }}',
+                'model' => '${{ secrets.AZURE_AI_MODEL }}',
+            ];
+            PHP
+
       - name: Stamp deploy timestamp in footer
         run: |
           DEPLOYED_AT="$(date -u '+%b %d, %Y %H:%M UTC')"

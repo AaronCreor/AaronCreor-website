@@ -604,6 +604,136 @@ details a:hover {
   text-decoration: underline;
 }
 
+.emailClassifier {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.emailClassifierLabel {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.emailClassifier textarea {
+  display: block;
+  width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.emailClassifier textarea::placeholder {
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.emailClassifier textarea:focus {
+  border-color: rgba(145, 190, 255, 0.5);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(145, 190, 255, 0.16);
+}
+
+.emailClassifierActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.emailClassifierCount {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 12px;
+}
+
+.emailClassifierCount.isOverLimit {
+  color: rgba(255, 118, 118, 0.95);
+}
+
+.sectionLinkButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+
+.emailClassifierStatus {
+  min-height: 18px;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 12.75px;
+}
+
+.emailClassifierStatus.isLoading {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.emailClassifierStatus.isLoading::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border: 2px solid rgba(145, 190, 255, 0.28);
+  border-top-color: rgba(145, 190, 255, 0.9);
+  border-radius: 999px;
+  animation: classifierSpin 800ms linear infinite;
+}
+
+.emailClassifierStatus.isError {
+  color: rgba(255, 118, 118, 0.95);
+}
+
+.emailClassifierResult {
+  padding: 12px;
+  border: 1px solid rgba(145, 190, 255, 0.18);
+  border-radius: 12px;
+  background: rgba(145, 190, 255, 0.07);
+}
+
+.emailClassifierResultLabel {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.emailClassifierResult[data-classification="request"] .emailClassifierResultLabel {
+  background: rgba(105, 185, 140, 0.18);
+  border-color: rgba(105, 185, 140, 0.28);
+}
+
+.emailClassifierResult[data-classification="incident"] .emailClassifierResultLabel {
+  background: rgba(255, 178, 92, 0.18);
+  border-color: rgba(255, 178, 92, 0.3);
+}
+
+.emailClassifierResult[data-classification="needs_human_review"] .emailClassifierResultLabel {
+  background: rgba(255, 118, 118, 0.16);
+  border-color: rgba(255, 118, 118, 0.28);
+}
+
+.emailClassifierResult p {
+  margin-top: 8px;
+}
+
+@keyframes classifierSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .mediaParagraph {
   margin-top: 10px;
 }
@@ -723,7 +853,9 @@ html[data-color-mode="light"] details,
 html[data-color-mode="light"] .badgeCard,
 html[data-color-mode="light"] .tracker img,
 html[data-color-mode="light"] .mediaFrame,
-html[data-color-mode="light"] .langBar {
+html[data-color-mode="light"] .langBar,
+html[data-color-mode="light"] .emailClassifier textarea,
+html[data-color-mode="light"] .emailClassifierResult {
   border-color: rgba(15, 23, 42, 0.12);
   background: rgba(15, 23, 42, 0.03);
 }
@@ -745,7 +877,9 @@ html[data-color-mode="light"] .blogCardMeta,
 html[data-color-mode="light"] .langTop,
 html[data-color-mode="light"] .badgeIssuer,
 html[data-color-mode="light"] .smallNote,
-html[data-color-mode="light"] .stat .label {
+html[data-color-mode="light"] .stat .label,
+html[data-color-mode="light"] .emailClassifierLabel,
+html[data-color-mode="light"] .emailClassifierStatus {
   color: rgba(15, 23, 42, 0.62);
 }
 
@@ -755,7 +889,9 @@ html[data-color-mode="light"] .list a,
 html[data-color-mode="light"] .sectionLinkButton,
 html[data-color-mode="light"] details a,
 html[data-color-mode="light"] summary,
-html[data-color-mode="light"] .badgeCard {
+html[data-color-mode="light"] .badgeCard,
+html[data-color-mode="light"] .emailClassifier textarea,
+html[data-color-mode="light"] .emailClassifierResultLabel {
   color: rgba(15, 23, 42, 0.9);
 }
 
@@ -815,6 +951,16 @@ html[data-color-mode="light"] .sectionLinkButton {
 html[data-color-mode="light"] .sectionLinkButton:hover {
   border-color: rgba(15, 23, 42, 0.2);
   background: rgba(15, 23, 42, 0.05);
+}
+
+html[data-color-mode="light"] .emailClassifier textarea::placeholder,
+html[data-color-mode="light"] .emailClassifierCount {
+  color: rgba(15, 23, 42, 0.45);
+}
+
+html[data-color-mode="light"] .emailClassifierCount.isOverLimit,
+html[data-color-mode="light"] .emailClassifierStatus.isError {
+  color: rgba(190, 45, 55, 0.95);
 }
 
 html[data-color-mode="light"] .langFill {
