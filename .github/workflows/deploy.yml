@@ -20,14 +20,12 @@ jobs:
             return '${{ secrets.GITHUBTOKEN }}';
             PHP
 
-            cat > api/azure-ai-config.php <<'PHP'
+            cat > api/gemini-config.php <<'PHP'
             <?php
             return [
-                'endpoint' => '${{ secrets.AZURE_AI_ENDPOINT }}',
-                'project_endpoint' => '${{ secrets.AZURE_AI_PROJECT_ENDPOINT }}',
-                'api_key' => '${{ secrets.AZURE_AI_KEY }}',
-                'token' => '${{ secrets.AZURE_AI_TOKEN || secrets.GITHUBTOKEN }}',
-                'model' => '${{ secrets.AZURE_AI_MODEL }}',
+                'endpoint' => '${{ secrets.GEMINI_ENDPOINT }}',
+                'api_key' => '${{ secrets.GEMINI_API_KEY }}',
+                'model' => '${{ secrets.GEMINI_MODEL }}',
             ];
             PHP
 

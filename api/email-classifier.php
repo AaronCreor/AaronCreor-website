@@ -4,7 +4,8 @@ header('Content-Type: application/json');
 header('Cache-Control: no-store');
 
 const EMAIL_MAX_CHARS = 1000;
-const DEFAULT_MODEL = 'gpt-4o-mini';
+const DEFAULT_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/openai';
+const DEFAULT_MODEL = 'gemini-flash-lite-latest';
 
 function respond_json(int $status, array $payload): void
 {
@@ -86,24 +87,20 @@ function should_route_to_human_review(string $emailBody): bool
     return false;
 }
 
-function call_classifier_model(string $endpoint, string $credential, string $credentialType, string $model, string $emailBody): array
+function call_classifier_model(string $endpoint, string $apiKey, string $model, string $emailBody): array
 {
     $url = rtrim($endpoint, '/') . '/chat/completions';
     $headers = [
         'Content-Type: application/json',
         'Accept: application/json',
+        "Authorization: Bearer {$apiKey}",
     ];
-
-    if ($credentialType === 'api-key') {
-        $headers[] = "api-key: {$credential}";
-    } else {
-        $headers[] = "Authorization: Bearer {$credential}";
-    }
 
     $payload = [
         'model' => $model,
         'temperature' => 0,
-        'max_tokens' => 40,
+        'max_tokens' => 100,
+        'reasoning_effort' => 'low',
         'response_format' => ['type' => 'json_object'],
         'messages' => [
             [
@@ -167,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $config = [];
-$configFile = __DIR__ . '/azure-ai-config.php';
+$configFile = __DIR__ . '/gemini-config.php';
 if (is_file($configFile)) {
     $loadedConfig = require $configFile;
     if (is_array($loadedConfig)) {
@@ -175,20 +172,11 @@ if (is_file($configFile)) {
     }
 }
 
-$endpoint = config_value($config, 'endpoint', 'AZURE_AI_ENDPOINT');
-$model = config_value($config, 'model', 'AZURE_AI_MODEL', DEFAULT_MODEL);
-$apiKey = config_value($config, 'api_key', 'AZURE_AI_KEY');
-$token = config_value($config, 'token', 'AZURE_AI_TOKEN');
+$endpoint = config_value($config, 'endpoint', 'GEMINI_ENDPOINT', DEFAULT_ENDPOINT);
+$model = config_value($config, 'model', 'GEMINI_MODEL', DEFAULT_MODEL);
+$apiKey = config_value($config, 'api_key', 'GEMINI_API_KEY');
 
-if ($token === '') {
-    $token = getenv('GITHUB_TOKEN') ?: getenv('GITHUBTOKEN') ?: '';
-}
-
-if ($endpoint === '') {
-    respond_json(500, ['error' => 'Classifier endpoint is not configured.']);
-}
-
-if ($apiKey === '' && $token === '') {
+if ($apiKey === '') {
     respond_json(500, ['error' => 'Classifier credentials are not configured.']);
 }
 
@@ -218,9 +206,7 @@ if (should_route_to_human_review($emailBody)) {
 }
 
 try {
-    $credential = $apiKey !== '' ? $apiKey : $token;
-    $credentialType = $apiKey !== '' ? 'api-key' : 'bearer';
-    $response = call_classifier_model($endpoint, $credential, $credentialType, $model, $emailBody);
+    $response = call_classifier_model($endpoint, $apiKey, $model, $emailBody);
     $content = $response['choices'][0]['message']['content'] ?? '';
 
     if (!is_string($content)) {

@@ -1,13 +1,6 @@
 {
   "posts": [
     {
-      "slug": "building-identifai",
-      "title": "Building IdentifAI: What Your Browser Gives Away",
-      "published": "2026-11-04",
-      "excerpt": "Why I built a browser fingerprint test, moved the demo to the homepage, and started comparing the attributes browsers share.",
-      "path": "/blog/posts/building-identifai.html"
-    },
-    {
       "slug": "learning-custom-ai-agents",
       "title": "Learning Custom AI Agents by Building Small Tools",
       "published": "2026-04-27",

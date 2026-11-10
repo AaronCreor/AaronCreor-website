@@ -47,7 +47,7 @@ Personal portfolio website with a lightweight PHP API endpoint for GitHub langua
 - `index.html` loads the page layout and references `css/index.css` + `js/index.js`
 - `js/index.js` calls `api/github-langs.php?user=AaronCreor`
 - `api/github-langs.php` fetches GitHub repo language data, aggregates it, and returns JSON
-- `api/email-classifier.php` calls the configured Azure AI inference endpoint server-side and returns a hard classification
+- `api/email-classifier.php` calls the Google Gemini API (OpenAI-compatible endpoint) server-side and returns a hard classification
 - The language frequency UI is rendered client-side in JavaScript
 
 ## GitHub Token Handling (API)
@@ -59,14 +59,23 @@ Personal portfolio website with a lightweight PHP API endpoint for GitHub langua
 
 This keeps secrets out of tracked source files.
 
-## Azure AI Handling (Email Classifier)
+## Gemini API Handling (Email Classifier)
 
 `api/email-classifier.php` supports two configuration sources:
 
-1. `api/azure-ai-config.php` (generated at deploy time)
+1. `api/gemini-config.php` (generated at deploy time)
 2. Environment variables
 
-The generated config supports `AZURE_AI_ENDPOINT`, `AZURE_AI_PROJECT_ENDPOINT`, `AZURE_AI_KEY`, `AZURE_AI_TOKEN`, and `AZURE_AI_MODEL`. If no Azure token is provided, the deploy workflow falls back to `GITHUBTOKEN` for GitHub Models-style inference.
+The generated config supports `GEMINI_API_KEY`, `GEMINI_MODEL`, and `GEMINI_ENDPOINT`. Only the API key is required: the model defaults to `gemini-flash-lite-latest` (free tier) and the endpoint defaults to `https://generativelanguage.googleapis.com/v1beta/openai`.
+
+### `api/gemini-config.php` format
+
+```php
+<?php
+return [
+    'api_key' => 'your_gemini_api_key_here',
+];
+```
 
 ### `api/github-token.php` format
 
@@ -87,7 +96,7 @@ Deployment is configured in `.github/workflows/deploy.yml`.
 ### What the workflow does
 
 1. Checks out the repo
-2. Generates `api/github-token.php` from a GitHub Actions secret (`GITHUBTOKEN`)
+2. Generates `api/github-token.php` and `api/gemini-config.php` from GitHub Actions secrets (`GITHUBTOKEN`, `GEMINI_API_KEY`)
 3. Deploys site files to the remote server via FTP
 4. Excludes `.git`, `.github`, and other local-only files from upload
 
@@ -99,6 +108,5 @@ Deployment is configured in `.github/workflows/deploy.yml`.
 - `FTP_PORT`
 - `REMOTE_PATH`
 - `GITHUBTOKEN` (used to generate `api/github-token.php` during deploy)
-- `AZURE_AI_ENDPOINT`
-- `AZURE_AI_PROJECT_ENDPOINT`
-- Optional: `AZURE_AI_KEY`, `AZURE_AI_TOKEN`, `AZURE_AI_MODEL`
+- `GEMINI_API_KEY` (used to generate `api/gemini-config.php` during deploy)
+- Optional: `GEMINI_MODEL`, `GEMINI_ENDPOINT`

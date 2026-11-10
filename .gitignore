@@ -1,8 +1,12 @@
 api/github-token.php
 api/azure-ai-config.php
+api/gemini-config.php
 
 .DS_Store
 Thumbs.db
 
 .vscode/
 .idea/
+
+# Local game prototypes (not part of the public website)
+/local-games/
