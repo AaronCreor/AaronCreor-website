@@ -332,7 +332,7 @@ async function loadRecentBlogPosts() {
   if (!list || !note) return;
 
   try {
-    const response = await fetch("blog/posts.json");
+    const response = await fetch("blog/posts.json", { cache: "no-cache" });
     if (!response.ok) throw new Error(`Blog manifest failed: ${response.status}`);
 
     const data = await response.json();
