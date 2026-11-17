@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#f7f4fa">
+  <title>Care Circle</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/cyc/style.css">
+  <script src="/cyc/forum.js" defer></script>
+</head>
+<body>
+  <main class="entry" id="entry" aria-labelledby="entry-title">
+    <div class="entry-card">
+      <div class="entry-content">
+        <div class="brand"><span class="brand-icon" aria-hidden="true"></span>Care Circle</div>
+        <div class="entry-intro">
+          <p class="eyebrow">Youth in care / ages 13–20</p>
+          <h1 id="entry-title">Come as<br>you <em>are.</em></h1>
+          <p>A place to talk about life in care, ask questions, and hear how other young people got through it.</p>
+        </div>
+        <form id="age-form">
+          <fieldset>
+            <legend>Are you 13 to 20 years old?</legend>
+            <div class="age-options">
+              <label><input type="radio" name="eligible" value="yes" required> Yes</label>
+              <label><input type="radio" name="eligible" value="no"> No</label>
+            </div>
+          </fieldset>
+          <button class="button primary enter-button" type="submit">Enter Care Circle <span aria-hidden="true">→</span></button>
+          <p class="form-message" id="age-message" role="alert" hidden>Care Circle is for young people ages 13 to 20.</p>
+        </form>
+        <p class="privacy-note"><span aria-hidden="true">◇</span> No account, name, or date of birth needed.</p>
+        <noscript><p>Enable JavaScript to use the age check and open the demo.</p></noscript>
+      </div>
+      <div class="entry-art" aria-hidden="true"></div>
+    </div>
+  </main>
+
+  <div id="forum" hidden>
+    <a class="skip-link" href="#feed-heading">Skip to discussions</a>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <button class="brand brand-button" id="home-button" type="button"><span class="brand-icon" aria-hidden="true"></span>Care Circle</button>
+        <label class="search-box">
+          <span class="search-icon" aria-hidden="true"></span>
+          <span class="sr-only">Search discussions</span>
+          <input id="search" type="search" placeholder="Search discussions" maxlength="100" autocomplete="off">
+        </label>
+        <button class="button primary new-post" type="button" data-compose><span aria-hidden="true">+</span> New post</button>
+      </div>
+    </header>
+
+    <div class="forum-layout">
+      <nav class="topics" aria-label="Discussion topics">
+        <h2 class="eyebrow">Topics</h2>
+        <div class="topic-list" id="topics"></div>
+        <button class="text-button guidelines-link" type="button" data-guidelines>Community guidelines <span aria-hidden="true">↗</span></button>
+      </nav>
+
+      <main class="forum-main">
+        <section class="welcome" aria-labelledby="welcome-title">
+          <p class="eyebrow">Care Circle / Community forum</p>
+          <h1 id="welcome-title" tabindex="-1">Life in care, <em>in your words.</em></h1>
+          <p>Share what’s on your mind, ask for advice, or just read along.</p>
+        </section>
+        <section aria-labelledby="feed-heading">
+          <div class="feed-header">
+            <h2 id="feed-heading" tabindex="-1">All discussions</h2>
+            <label class="sort-label">
+              <span class="sr-only">Sort discussions</span>
+              <select id="sort">
+                <option value="latest">Latest</option>
+                <option value="top">Top voted</option>
+              </select>
+            </label>
+          </div>
+          <p class="sr-only" id="feed-status" role="status"></p>
+          <div class="feed" id="feed"></div>
+        </section>
+      </main>
+
+      <aside class="sidebar" aria-label="About the community">
+        <section class="side-card demo-card">
+          <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Interactive demo</p>
+          <h2>Make yourself at home.</h2>
+          <p>The example threads are fictional. Posts, replies, votes, and saves you add here stay in this browser.</p>
+          <button class="text-button" type="button" id="manage-data">Manage demo activity <span aria-hidden="true">↗</span></button>
+        </section>
+        <section class="side-card">
+          <h2>Look out for each other</h2>
+          <ul>
+            <li>Share only what feels comfortable.</li>
+            <li>Keep real names and locations out of posts.</li>
+            <li>Respect other people’s experiences.</li>
+          </ul>
+          <button class="text-button" type="button" data-guidelines>Read the guidelines <span aria-hidden="true">↗</span></button>
+        </section>
+        <button class="text-button exit-button" type="button" id="exit">Leave Care Circle <span aria-hidden="true">→</span></button>
+      </aside>
+    </div>
+  </div>
+
+  <dialog id="compose-dialog" aria-labelledby="compose-title">
+    <div class="dialog-heading">
+      <h2 id="compose-title">Start a discussion</h2>
+      <button class="close-button" type="button" data-close aria-label="Close">×</button>
+    </div>
+    <p class="dialog-note">Your post stays in this browser. Leave out real names, schools, and addresses.</p>
+    <form id="compose-form" class="stacked-form">
+      <div class="form-field"><label for="compose-topic">Topic</label><select name="topic" id="compose-topic" required></select></div>
+      <label>Title<input name="title" type="text" maxlength="120" placeholder="What’s on your mind?" required></label>
+      <label>Your post<textarea name="body" rows="5" maxlength="2000" placeholder="Share as much as you’re comfortable with." required></textarea></label>
+      <button class="button primary" type="submit">Post discussion</button>
+    </form>
+  </dialog>
+
+  <dialog id="thread-dialog" aria-labelledby="thread-title">
+    <div class="dialog-heading">
+      <div>
+        <p class="eyebrow" id="thread-topic"></p>
+        <h2 id="thread-title"></h2>
+      </div>
+      <button class="close-button" type="button" data-close aria-label="Close">×</button>
+    </div>
+    <p class="post-meta" id="thread-meta"></p>
+    <p class="thread-body" id="thread-body"></p>
+    <h3 class="reply-heading">Replies</h3>
+    <div id="replies"></div>
+    <form id="reply-form" class="stacked-form">
+      <label>Add a reply<textarea name="body" rows="3" maxlength="800" placeholder="Share a kind reply" required></textarea></label>
+      <p class="dialog-note" role="status">Replies stay in this browser. Leave out identifying details.</p>
+      <button class="button primary" type="submit">Add reply</button>
+    </form>
+  </dialog>
+
+  <dialog id="guidelines-dialog" aria-labelledby="guidelines-title">
+    <div class="dialog-heading">
+      <h2 id="guidelines-title">Community guidelines</h2>
+      <button class="close-button" type="button" data-close aria-label="Close">×</button>
+    </div>
+    <ul class="guidelines">
+      <li><strong>Protect your privacy.</strong> Leave out names, school names, addresses, photos, and contact details.</li>
+      <li><strong>Share on your terms.</strong> You can read along, take a break, or skip any thread.</li>
+      <li><strong>Respond with care.</strong> Make room for different experiences. Ask before offering advice.</li>
+    </ul>
+    <p class="dialog-note">This is a demo. Nobody else sees what you write here.</p>
+  </dialog>
+
+  <dialog id="data-dialog" aria-labelledby="data-title">
+    <div class="dialog-heading">
+      <h2 id="data-title">Manage demo activity</h2>
+      <button class="close-button" type="button" data-close aria-label="Close">×</button>
+    </div>
+    <p class="dialog-note">Clearing demo activity removes your posts, replies, votes, and saved discussions from this browser.</p>
+    <button class="button primary" id="clear-data" type="button">Clear my demo activity</button>
+  </dialog>
+
+  <p class="toast" id="toast" role="status" hidden></p>
+  <template id="post-template">
+    <article class="post">
+      <div class="votes" role="group" aria-label="Vote on this discussion">
+        <button class="vote-button" type="button" data-vote="1" aria-label="Upvote" aria-pressed="false">↑</button>
+        <span class="score" aria-label="Score"></span>
+        <button class="vote-button" type="button" data-vote="-1" aria-label="Downvote" aria-pressed="false">↓</button>
+      </div>
+      <div class="post-content">
+        <div class="post-byline"><span class="tag"></span><span class="post-meta"></span></div>
+        <h3><button type="button" class="post-title" data-thread></button></h3>
+        <p class="post-preview"></p>
+        <div class="post-actions">
+          <button class="post-action" type="button" data-thread><span class="comment-icon" aria-hidden="true"></span><span class="reply-count"></span></button>
+          <button class="post-action save" type="button" data-save aria-pressed="false"><span class="save-icon" aria-hidden="true"></span>Save</button>
+        </div>
+      </div>
+    </article>
+  </template>
+</body>
+</html>
